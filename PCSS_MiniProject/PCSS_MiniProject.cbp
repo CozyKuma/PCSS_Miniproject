@@ -35,8 +35,16 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/Character.h" />
+		<Unit filename="include/ClassType.h" />
+		<Unit filename="include/Fighter.h" />
+		<Unit filename="include/Ranger.h" />
+		<Unit filename="include/Wizard.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Character.cpp" />
+		<Unit filename="src/ClassType.cpp" />
+		<Unit filename="src/Fighter.cpp" />
+		<Unit filename="src/Ranger.cpp" />
+		<Unit filename="src/Wizard.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

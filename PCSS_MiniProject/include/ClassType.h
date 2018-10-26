@@ -13,5 +13,4 @@ class ClassType
     private:
 };
 
-
 #endif // CLASSTYPE_H
