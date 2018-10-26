@@ -1,6 +1,6 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include classType_
+#include ClassType.h
 
 
 class Character
