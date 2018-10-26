@@ -1,26 +1,27 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include ClassType.h
+#include "ClassType.h"
+#include <string>
 
+using namespace std;
 
 class Character
 {
-    public:
-        Character();
-        virtual ~Character();
+    private:
         string name;
         int maxHealth;
-        classType Class;
+        ClassType Class;
         int strength;
         int dexterity;
         int intelligence;
         bool alive;
 
-    private:
+    public:
+        Character(string name, ClassType aClass);
         int rollInit;
         string getName;
         int getHealth;
-        void int setHealth;
+        int setHealth;
         bool isAlive;
 };
 

@@ -1,20 +1,23 @@
 #include "Character.h"
+#include "ClassType.h"
 
-Character::Character()
+Character::Character(string n, ClassType aC)
 {
-       public:
-        Character();
-        virtual ~Character();
-        string name;
-        int maxHealth;
-        ClassType aClass;
-        int strength;
-        int dexterity;
-        int intelligence;
-        bool alive;
 
-    private:
-        int rollInit()
+        string name;
+        int maxHealth = 100;
+        int health = 100;
+        ClassType aClass;
+        int strength = 10;
+        int dexterity = 10;
+        int intelligence = 10;
+        bool alive = true;
+        name = n;
+        aClass = aC;
+
+
+
+        int rollInit(){}
 
         string getName()
         {
@@ -23,18 +26,18 @@ Character::Character()
 
         int getHealth()
         {
-            return maxHealth;
+            return health;
         }
 
-        void int setHealth(int health)
+        int setHealth(int h)
         {
-            health = maxHealth;
+            health = h;
         }
 
-        bool isAlive(health)
+        bool isAlive(int health)
         {
 
-            if (maxHealth > 0)
+            if (health > 0)
             {
                 return true;
             } else
@@ -43,6 +46,7 @@ Character::Character()
             }
         }
 
+        cout<< name << endl;
 
 }
 

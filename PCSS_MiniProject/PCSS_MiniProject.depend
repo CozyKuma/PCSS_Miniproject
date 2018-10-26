@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
+	"ClassType.h"
+
+1540546933 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
+
+1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+	"Fighter.h"
+
+1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
+	<ClassType.h>
+
+1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
+	"Ranger.h"
+
+1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
+	<ClassType.h>
+
+1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+	"Wizard.h"
+
+1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+	<ClassType.h>
+
