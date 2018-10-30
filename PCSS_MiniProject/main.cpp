@@ -8,8 +8,6 @@ int main(){
 
 }
 
-
-
 class CombatSystem{
 
 
