@@ -12,8 +12,8 @@ Character::Character(string newName)
         int dexterity = 10;
         int intelligence = 10;
         bool alive = true;
-        int defense = 10;
-        bool defenseFlag = true;
+        int defense = 1;
+        bool defenseFlag = false;
 }
 
         string Character::getName()
@@ -87,18 +87,19 @@ Character::Character(string newName)
 
         void Character::takeDamage(int dmg)
         {
+            dmg = dmg/def;
             health = health - dmg;
         }
 
         void Character::changeDefenseFlag()
         {
-            if (defenseFlag == true)
+            if (defenseFlag == false)
             {
-                defenseFlag = false;
+                defenseFlag = true;
             }
             else
             {
-                defenseFlag = true;
+                defenseFlag = false;
             }
         }
 
