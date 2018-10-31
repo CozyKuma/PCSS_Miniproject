@@ -1,24 +1,37 @@
 # depslib dependency file v1.0
-1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
+1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
 	"ClassType.h"
 
-1540546933 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
+1540543333 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
 
-1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
 	"Fighter.h"
 
-1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
+1540542193 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
 	<ClassType.h>
 
-1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
+1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
 	"Ranger.h"
 
-1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
+1540542193 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
 	<ClassType.h>
 
-1540545793 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
 	"Wizard.h"
 
-1540545793 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+1540542193 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
 	<ClassType.h>
+
+1540981370 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+	<iostream>
+	"character.h"
+
+1540981973 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
+	"ClassType.h"
+	<string>
+	<iostream>
+
+1540982071 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+	"Character.h"
+	"ClassType.h"
 
