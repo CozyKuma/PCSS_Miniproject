@@ -87,7 +87,7 @@ Character::Character(string newName)
 
         void Character::takeDamage(int dmg)
         {
-            dmg = dmg/def;
+            dmg = dmg/defense;
             health = health - dmg;
         }
 

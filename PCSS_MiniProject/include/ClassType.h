@@ -1,14 +1,11 @@
 #ifndef CLASSTYPE_H
 #define CLASSTYPE_H
+#include <Character.h>
 
-
-class ClassType
+class ClassType : public Character
 {
     public:
         ClassType();
-        virtual ~ClassType();
-
-    protected:
 
     private:
 };

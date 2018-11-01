@@ -1,5 +1,5 @@
 #include "Wizard.h"
-#include <main.cpp>
+
 
 Wizard::Wizard()
 {

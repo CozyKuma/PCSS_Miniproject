@@ -1,9 +1,7 @@
 #ifndef WIZARD_H
 #define WIZARD_H
-#include <ClassType.h>
-#include <Character.h>
 
-class Wizard : public ClassType
+class Wizard: public ClassType
 {
     public:
         Wizard();
