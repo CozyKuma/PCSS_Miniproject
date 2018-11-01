@@ -46,22 +46,21 @@ class CombatSystem{
             cout << "You currently have: " << activePlayer.health << " HP" << endl;
             cout << "Choose your ability by entering 1, 2 or 3" << endl;
             cin >> abilityNumber;
-            activePlayer.chooseAbility(abilityNumber);
+
+            activePlayer.getClass().chooseAbility(abilityNumber, inactivePlayer, activePlayer);
 
             checkHealth(player1, player2)
 
 
         }
 
-    void checkHealth(Character activePlayer, inactivePlayer){
-        if (activePlayer.health <= 0){
-            activePlayer.alive = false;
+    void checkHealth(Character activePlayer, Character inactivePlayer){
+        if (activePlayer.isAlive == false){
             cout << inactivePlayer.getName() <<" has triumphed!" << endl;
             cout << "You have lost" << endl;
 
         }
-        else if(inactivePlayer.health <= 0){
-            inactivePlayer.alive = false;
+        else if(inactivePlayer.isAlive == false){
             cout << "You have won!" << endl;
         }
         else{return}
