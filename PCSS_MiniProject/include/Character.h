@@ -1,8 +1,9 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include "ClassType.h"
 #include <string>
 #include <iostream>
+#include "Dice.h"
+
 
 using namespace std;
 
@@ -12,7 +13,6 @@ class Character
         string name;
         int maxHealth;
         int health;
-        ClassType aClass;
         int strength;
         int dexterity;
         int intelligence;
@@ -21,10 +21,12 @@ class Character
         bool defenseFlag;
 
     public:
+        Character();
         Character(string newName);
+        void setName(string n);
         string getName();
-        ClassType getClass();
-        void setClass(ClassType newClass);
+        //ClassType getClass();
+        //void setClass(ClassType newClass);
         int getHealth();
         void setHealth(int h);
         int getMaxHealth();
@@ -36,6 +38,7 @@ class Character
         void setDefense(int def);
         void takeDamage(int dmg);
         void changeDefenseFlag();
+        bool getDefenseFlag();
 };
 
 #endif // CHARACTER_H

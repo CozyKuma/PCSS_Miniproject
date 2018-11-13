@@ -1,14 +1,17 @@
-#ifndef RANGER_H
+/*#ifndef RANGER_H
 #define RANGER_H
 
-#include <ClassType.h>
+#include "ClassType.h"
 
 
 class Ranger : public ClassType
 {
     public:
         Ranger();
-        virtual ~Ranger();
+       // virtual ~Ranger()
+        void Ranger::aimedShot(Character target);
+        void Ranger::bandage(Character self);
+        void Ranger::bearTrap();
 
     protected:
 
@@ -16,3 +19,4 @@ class Ranger : public ClassType
 };
 
 #endif // RANGER_H
+*/

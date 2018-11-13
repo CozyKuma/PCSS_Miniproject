@@ -1,13 +1,11 @@
 #include "Character.h"
-#include "ClassType.h"
+
 
 Character::Character(string newName)
 {
-
         string name = newName;
         int maxHealth = 100;
         int health = 100;
-        ClassType aClass;
         int strength = 10;
         int dexterity = 10;
         int intelligence = 10;
@@ -15,7 +13,23 @@ Character::Character(string newName)
         int defense = 1;
         bool defenseFlag = false;
 }
+Character::Character(){
 
+        string name = "bob";
+        int maxHealth = 100;
+        int health = 100;
+        int strength = 10;
+        int dexterity = 10;
+        int intelligence = 10;
+        bool alive = true;
+        int defense = 1;
+        bool defenseFlag = false;
+
+}
+        void Character::setName(string n)
+        {
+            name = n;
+        }
         string Character::getName()
         {
             return name;
@@ -48,16 +62,6 @@ Character::Character(string newName)
             }
         }
 
-        ClassType Character::getClass()
-        {
-            return aClass;
-        }
-
-        void Character::setClass(ClassType newClass)
-        {
-            aClass = newClass;
-        }
-
         int Character::getMaxHealth()
         {
             return maxHealth;
@@ -87,7 +91,7 @@ Character::Character(string newName)
 
         void Character::takeDamage(int dmg)
         {
-            dmg = dmg/def;
+            dmg = dmg/defense;
             health = health - dmg;
         }
 
@@ -101,5 +105,11 @@ Character::Character(string newName)
             {
                 defenseFlag = false;
             }
+        }
+
+        bool Character::getDefenseFlag()
+        {
+            return defenseFlag;
+
         }
 

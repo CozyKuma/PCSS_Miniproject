@@ -35,3 +35,45 @@
 	"Character.h"
 	"ClassType.h"
 
+1541673652 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+	<iostream>
+	"Character.h"
+	<random>
+	"Wizard.h"
+
+1541673597 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
+	<string>
+	<iostream>
+	"Dice.h"
+
+1541415594 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
+	"Character.h"
+
+1541672468 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+	"Character.h"
+
+1541072145 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
+	"ClassType.h"
+	"Character.h"
+
+1541415762 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+
+1541066588 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
+	<ClassType.h>
+
+1541415762 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
+
+1541066588 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
+	<ClassType.h>
+
+1541673511 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+	"Wizard.h"
+
+1541673439 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+	"Character.h"
+
+1541673748 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\dice.h
+
+1541674109 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
+	"Dice.h"
+

@@ -1,21 +1,15 @@
 #include <iostream>
-#include "character.h"
+#include "Character.h"
 #include <random>
+#include "Wizard.h"
 
 using namespace std;
 
+
 int main()
 {
-    cout << "Hello world!" << endl;
+    Wizard w1 = Wizard("Bob");
     return 0;
 }
 
-int rollDice(int amount, int sides)
-{
-    int result = 0;
-    for (int i = 0; i < amount; i++)
-    {
-        result = result + rand()% sides +1;
-    }
 
-}
