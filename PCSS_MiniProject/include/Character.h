@@ -25,8 +25,6 @@ class Character
         Character(string newName);
         void setName(string n);
         string getName();
-        //ClassType getClass();
-        //void setClass(ClassType newClass);
         int getHealth();
         void setHealth(int h);
         int getMaxHealth();
@@ -39,6 +37,7 @@ class Character
         void takeDamage(int dmg);
         void changeDefenseFlag();
         bool getDefenseFlag();
+        virtual void chooseAbility(int ability, Character& target, Character& self) = 0;
 };
 
 #endif // CHARACTER_H
