@@ -86,3 +86,38 @@
 1542103651 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\game.h
 	"Character.h"
 
+1542109810 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+	"Character.h"
+
+1542109911 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\include\character.h
+	<string>
+	<iostream>
+	"Dice.h"
+
+1542097237 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\include\dice.h
+
+1542097237 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
+	"Dice.h"
+
+1542097237 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+
+1542107171 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\game.cpp
+	"Game.h"
+
+1542106914 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\include\game.h
+	"Character.h"
+
+1542097237 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
+
+1542108730 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+	"Wizard.h"
+
+1542109873 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+	"Character.h"
+
+1542109711 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\main.cpp
+	<iostream>
+	"Character.h"
+	"Wizard.h"
+	<cstdlib>
+

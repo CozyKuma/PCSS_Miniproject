@@ -1,6 +1,5 @@
 #include "Character.h"
 
-
 Character::Character(string newName)
 {
         string name = newName;
@@ -13,8 +12,8 @@ Character::Character(string newName)
         int defense = 1;
         bool defenseFlag = false;
 }
-Character::Character(){
-
+Character::Character()
+{
         string name = "bob";
         int maxHealth = 100;
         int health = 100;
@@ -26,6 +25,7 @@ Character::Character(){
         bool defenseFlag = false;
 
 }
+
         void Character::setName(string n)
         {
             name = n;

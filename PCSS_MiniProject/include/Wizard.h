@@ -8,7 +8,7 @@ class Wizard : public Character
 {
     public:
         Wizard();
-        Wizard(string wizName);
+        Wizard(string newName);
         void fireball(Character& target);
         void spellShield(Character& self);
         void lightningStrike(Character& target, Character& self);

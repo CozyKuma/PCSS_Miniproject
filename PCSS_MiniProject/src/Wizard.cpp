@@ -1,25 +1,25 @@
 #include "Wizard.h"
 
 
-Wizard::Wizard(string wizName) : Character(wizName)
+Wizard::Wizard(string newName)
+: Character(newName)
 {
 
 }
-Wizard::Wizard()
+Wizard::Wizard() : Character()
 {
-   Character();
+
 }
 
-
-void Wizard::fireball(Character target)
+void Wizard::fireball(Character& target)
 {
     int damage = 0;
     damage = Dice::rollDice(1, 10);
     target.takeDamage(damage);
-    cout<< "You dealt " << damage << "points of damage to " << target.getName() <<endl;
+    cout << "You dealt " << damage << " points of damage to " << target.getName() <<endl;
 }
 
-void Wizard::spellShield(Character self)
+void Wizard::spellShield(Character& self)
 {
 
     if (!self.getDefenseFlag())
@@ -35,7 +35,7 @@ void Wizard::spellShield(Character self)
 
 }
 
-void Wizard::lightningStrike(Character target, Character self)
+void Wizard::lightningStrike(Character& target, Character& self)
 {
     int damage = 0;
     damage = Dice::rollDice(3, 10);
@@ -43,7 +43,7 @@ void Wizard::lightningStrike(Character target, Character self)
     if (result == 1 || result == 2)
     {
         target.takeDamage(damage);
-        cout<< "You gave " << damage << "damage to " << target.getName() <<endl;
+        cout<< "You gave " << damage << "damage to " << target.Character::getName() <<endl;
     }
     else if (result == 3)
     {
@@ -52,7 +52,7 @@ void Wizard::lightningStrike(Character target, Character self)
     }
 }
 
-void Wizard::chooseAbility(int ability, Character target, Character self)
+void Wizard::chooseAbility(int ability, Character& target, Character& self)
 {
     switch (ability){
         case 1:

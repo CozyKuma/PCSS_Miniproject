@@ -10,7 +10,7 @@ Game::~Game()
     //dtor
 }
 
-Character rollInitiative(Character c1, Character c2){
+Character * rollInitiative(Character& c1, Character& c2){
 
     int player1 = Dice::rollDice(1, 20);
 
@@ -18,11 +18,11 @@ Character rollInitiative(Character c1, Character c2){
 
     if(player1 > player2){
 
-        return c1;
+        return &c1;
     }
     else if(player2 > player1){
 
-        return c2;
+        return &c2;
     }
     else{
 
@@ -32,7 +32,7 @@ Character rollInitiative(Character c1, Character c2){
 
 }
 
-void checkHealth(Character activePlayer, Character inactivePlayer){
+void checkHealth(Character& activePlayer, Character& inactivePlayer){
     if (!activePlayer.isAlive()){
         cout << inactivePlayer.getName() <<" has triumphed!" << endl;
         cout << "You have lost" << endl;
@@ -59,11 +59,11 @@ void startCombat(){
     bool gameRuns = true;
     bool initiativeRolled = false;
 
-    Character player1;
-    Character player2;
+    Character * player1;
+    Character * player2;
 
-    Character activePlayer;
-    Character inactivePlayer;
+    Character * activePlayer;
+    Character * inactivePlayer;
 
     bool swapTurn = false;
 
@@ -71,7 +71,7 @@ void startCombat(){
 
         if(initiativeRolled == false){
 
-            player1 = rollInitiative(player1, player2);
+            player1 = rollInitiative(*player1, *player2);
         }
 
         if(swapTurn == false){
@@ -85,13 +85,13 @@ void startCombat(){
         }
 
         int abilityNumber;
-        cout << "You currently have: " << activePlayer.getHealth() << " HP" << endl;
+        cout << "You currently have: " << activePlayer->getHealth() << " HP" << endl;
         cout << "Choose your ability by entering 1, 2 or 3" << endl;
         cin >> abilityNumber;
 
-        activePlayer.chooseAbility(abilityNumber, inactivePlayer, activePlayer);
+        activePlayer->chooseAbility(abilityNumber, *inactivePlayer, *activePlayer);
 
-        checkHealth(player1, player2);
+        checkHealth(*player1, *player2);
 
 
     }

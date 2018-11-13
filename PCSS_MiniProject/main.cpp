@@ -3,17 +3,19 @@
 #include "Wizard.h"
 #include <cstdlib>
 
-
-
-
 using namespace std;
 
+typedef Character* characPtr;
 
 int main()
 {
-    Character w1 = Wizard("Bob");
-    Character w2 = Wizard("Bobby");
-    w1.chooseAbility(1, w2, w1);
+    characPtr player1;
+    characPtr player2;
+    Wizard w1 = Wizard("Bob");
+    Wizard w2 = Wizard("Bobby");
+    player1 = &w1;
+    player2 = &w2;
+    player1->chooseAbility(1, *player2, *player1);
     return 0;
 
 }
