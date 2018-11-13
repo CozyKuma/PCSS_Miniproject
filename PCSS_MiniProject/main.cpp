@@ -21,6 +21,11 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    cout << "Welcome to the jungle" << endl;
+    cout << "Please enter the name of your character:";
+    cin >> name;
+    Character player = Character(name);
+
+
     return 0;
 }
