@@ -1,10 +1,8 @@
 #include "Wizard.h"
 
-
 Wizard::Wizard(string newName)
 : Character(newName)
 {
-
 }
 Wizard::Wizard() : Character()
 {
@@ -65,6 +63,7 @@ void Wizard::chooseAbility(int ability, Character& target, Character& self)
             lightningStrike(target, self);
             break;
         default:
+            cout << "choose ability default" << endl;
             break;
     }
 }

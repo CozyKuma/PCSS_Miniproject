@@ -1,30 +1,29 @@
 #include "Character.h"
 
-Character::Character(string newName)
-{
-        string name = newName;
-        int maxHealth = 100;
-        int health = 100;
-        int strength = 10;
-        int dexterity = 10;
-        int intelligence = 10;
-        bool alive = true;
-        int defense = 1;
-        bool defenseFlag = false;
-}
-Character::Character()
-{
-        string name = "bob";
-        int maxHealth = 100;
-        int health = 100;
-        int strength = 10;
-        int dexterity = 10;
-        int intelligence = 10;
-        bool alive = true;
-        int defense = 1;
-        bool defenseFlag = false;
+using namespace std;
 
-}
+Character::Character(string newName):
+    name(newName),
+    defense(1),
+    health(100),
+    maxHealth(100),
+    strength(10),
+    dexterity(10),
+    intelligence(10),
+    alive(true),
+    defenseFlag(false){}
+
+Character::Character():
+    name("Bob"),
+    defense(1),
+    health(100),
+    maxHealth(100),
+    strength(10),
+    dexterity(10),
+    intelligence(10),
+    alive(true),
+    defenseFlag(false){}
+
 
         void Character::setName(string n)
         {

@@ -11,11 +11,12 @@ int main()
 {
     characPtr player1;
     characPtr player2;
-    Wizard w1 = Wizard("Bob");
-    Wizard w2 = Wizard("Bobby");
-    player1 = &w1;
-    player2 = &w2;
+    Wizard* w1 = new Wizard("Bob");
+    Wizard* w2 = new Wizard("Bobby");
+    player1 = w1;
+    player2 = w2;
     player1->chooseAbility(1, *player2, *player1);
+
     return 0;
 
 }

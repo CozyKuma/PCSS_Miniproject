@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Dice.h"
 
-
 using namespace std;
 
 class Character
@@ -37,7 +36,7 @@ class Character
         void takeDamage(int dmg);
         void changeDefenseFlag();
         bool getDefenseFlag();
-        virtual void chooseAbility(int ability, Character& target, Character& self) = 0;
+        virtual void chooseAbility(int ability, Character& target, Character& self) {};
 };
 
 #endif // CHARACTER_H
