@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
+1541065298 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
 	"ClassType.h"
 
-1540543333 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
+1541065724 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
+	<Character.h>
 
 1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
 	"Fighter.h"
@@ -19,27 +20,31 @@
 1540542193 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
 	"Wizard.h"
 
-1540542193 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
-	<ClassType.h>
+1541065078 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
 
-1540982439 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+1541063924 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
 	<iostream>
 	"character.h"
+	<random>
+	<cstdlib>
+	<ctime>
 
-1540987204 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
+1541065790 c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
 	"ClassType.h"
 	<string>
 	<iostream>
 
-1540982071 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+1541064407 source:c:\users\kasper amstrup\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
 	"Character.h"
 	"ClassType.h"
 
-1541673652 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+1542096770 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
 	<iostream>
 	"Character.h"
 	<random>
 	"Wizard.h"
+	<cstdlib>
+	<ctime>
 
 1541673597 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
 	<string>
@@ -69,7 +74,7 @@
 1541673511 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
 	"Wizard.h"
 
-1541673439 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+1542096770 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
 	"Character.h"
 
 1541673748 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\dice.h

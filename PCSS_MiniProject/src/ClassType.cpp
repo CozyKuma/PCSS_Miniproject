@@ -5,8 +5,3 @@ ClassType::ClassType()
 {
     //ctor
 }
-
-ClassType::~ClassType()
-{
-    //dtor
-}
