@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1543574956 source:c:\users\casper\onedrive - aalborg universitet\3rd semester\programming\winsoc_serve\server_codeblock_ide\main.cpp
+	<iostream>
+	<windows.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<stdlib.h>
+	<stdio.h>
+
