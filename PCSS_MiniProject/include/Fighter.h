@@ -1,21 +1,22 @@
-/*#ifndef FIGHTER_H
+#ifndef FIGHTER_H
 #define FIGHTER_H
+#include "Character.h"
 
-#include "ClassType.h"
 
 
-class Fighter : public ClassType
+class Fighter : public Character
 {
     public:
+        Fighter(string newName);
         Fighter();
-        //virtual ~Fighter();
-        void slam(Character target);
-        void reflect(Character target);
-        void stunningLeap(Character target);
+        void slam(Character& target);
+        void reflect(Character& target);
+        void stunningLeap(Character& target);
+        void chooseAbility(int ability, Character& target, Character& self);
     protected:
 
     private:
 };
 
 #endif // FIGHTER_H
-*/
+

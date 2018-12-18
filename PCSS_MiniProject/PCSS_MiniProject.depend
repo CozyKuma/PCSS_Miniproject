@@ -38,13 +38,13 @@
 	"Character.h"
 	"ClassType.h"
 
-1542101899 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+1545131432 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
 	<iostream>
 	"Character.h"
 	"Wizard.h"
-	<cstdlib>
+	"Fighter.h"
 
-1542103886 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
+1542797857 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
 	<string>
 	<iostream>
 	"Dice.h"
@@ -52,38 +52,41 @@
 1541415594 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
 	"Character.h"
 
-1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+1542797857 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
 	"Character.h"
 
 1541072145 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
 	"ClassType.h"
 	"Character.h"
 
-1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+1543573655 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+	"Fighter.h"
 
-1541066588 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
-	<ClassType.h>
+1543573521 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
+	"Character.h"
 
 1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
 
 1541066588 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
 	<ClassType.h>
 
-1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+1543574219 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
 	"Wizard.h"
 
-1542103910 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
+1542112713 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
 	"Character.h"
 
 1542097257 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\dice.h
 
-1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
+1543574219 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
 	"Dice.h"
+	<cstdlib>
+	<ctime>
 
-1542103135 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\game.cpp
+1542112713 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\game.cpp
 	"Game.h"
 
-1542103651 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\game.h
+1542112713 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\game.h
 	"Character.h"
 
 1542111820 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\pcss_miniproject\src\character.cpp

@@ -14,7 +14,8 @@ void Wizard::fireball(Character& target)
     int damage = 0;
     damage = Dice::rollDice(1, 10);
     target.takeDamage(damage);
-    cout << "You dealt " << damage << " points of damage to " << target.getName() <<endl;
+    cout << "You cast fireball and dealt " << damage << " points of damage to " << target.getName() <<endl;
+    damage = 0;
 }
 
 void Wizard::spellShield(Character& self)
@@ -24,11 +25,11 @@ void Wizard::spellShield(Character& self)
     {
         self.setDefense(2);
         self.changeDefenseFlag();
-        cout<< "Your defense went up" <<endl;
+        cout<< "You cast spell shield, your defense went up" <<endl;
     }
     else
     {
-        cout<< "Spell shield is already active." <<endl;
+        cout<< "You try to cast spell shield, but a spell shield is already active." <<endl;
     }
 
 }
@@ -41,7 +42,7 @@ void Wizard::lightningStrike(Character& target, Character& self)
     if (result == 1 || result == 2)
     {
         target.takeDamage(damage);
-        cout<< "You gave " << damage << "damage to " << target.Character::getName() <<endl;
+        cout<< "You cast lightning strike and dealt " << damage << "damage to " << target.Character::getName() <<endl;
     }
     else if (result == 3)
     {
