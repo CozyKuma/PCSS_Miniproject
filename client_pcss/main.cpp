@@ -98,15 +98,8 @@ int __cdecl main(int argc, char **argv)
     }
 
     printf("Bytes Sent: %d\n", iResult);
-
-    // shutdown the connection since no more data will be sent
-    iResult = shutdown(ConnectSocket, SD_SEND);
-    if (iResult == SOCKET_ERROR) {
-        printf("shutdown failed with error: %d\n", WSAGetLastError());
-        closesocket(ConnectSocket);
-        WSACleanup();
-        return 1;
-    }
+    recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    printf(recvbuf);
 
     // Receive until the peer closes the connection
     do {
@@ -120,6 +113,15 @@ int __cdecl main(int argc, char **argv)
             printf("recv failed with error: %d\n", WSAGetLastError());
 
     } while( iResult > 0 );
+
+    // shutdown the connection since no more data will be sent
+    iResult = shutdown(ConnectSocket, SD_SEND);
+    if (iResult == SOCKET_ERROR) {
+        printf("shutdown failed with error: %d\n", WSAGetLastError());
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
 
     // cleanup
     closesocket(ConnectSocket);

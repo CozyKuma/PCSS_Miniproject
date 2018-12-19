@@ -1,8 +1,45 @@
 # depslib dependency file v1.0
-1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\main.cpp
+1545224945 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\main.cpp
 	<windows.h>
 	<winsock2.h>
 	<ws2tcpip.h>
 	<stdlib.h>
 	<stdio.h>
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\archer.cpp
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\character.cpp
+	"Character.h"
+
+1545221202 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\include\character.h
+	<string>
+	<iostream>
+	"Dice.h"
+
+1545208723 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\include\dice.h
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\dice.cpp
+	"Dice.h"
+	<cstdlib>
+	<ctime>
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\fighter.cpp
+	"Fighter.h"
+
+1545221202 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\include\fighter.h
+	"Character.h"
+
+1545208723 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\game.cpp
+	"Game.h"
+
+1545208723 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\include\game.h
+	"Character.h"
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\ranger.cpp
+
+1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\src\wizard.cpp
+	"Wizard.h"
+
+1545208723 c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\include\wizard.h
+	"Character.h"
 

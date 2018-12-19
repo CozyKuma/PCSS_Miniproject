@@ -92,7 +92,7 @@ int __cdecl main(void)
     if(ClientSocket1 == INVALID_SOCKET)
     {
         ClientSocket1 = accept(ListenSocket, NULL, NULL);
-        printf("Client 1 has connected.");
+        printf("Client 1 has connected.\n");
         if (ClientSocket1 == INVALID_SOCKET)
         {
             printf("accept failed with error: %d\n", WSAGetLastError());
@@ -105,7 +105,7 @@ int __cdecl main(void)
     if(ClientSocket1 != INVALID_SOCKET && ClientSocket2 == INVALID_SOCKET)
     {
         ClientSocket2 = accept(ListenSocket, NULL, NULL);
-        printf("Client 2 has connected.");
+        printf("Client 2 has connected.\n");
         if (ClientSocket2 == INVALID_SOCKET)
         {
             printf("accept failed with error: %d\n", WSAGetLastError());
@@ -115,14 +115,17 @@ int __cdecl main(void)
         }
     }
 
-
     // No longer need server socket
     closesocket(ListenSocket);
+
+
 
     // Receive until the peer shuts down the connection
     bool runFlag = true;
     while(runFlag) {
-
+            printf("runFlag active");
+            std::string msg = "fuck this";
+            send(ClientSocket1, msg.c_str(), strlen(msg.c_str()), 0);
     }
 
     // shutdown the connection since we're done
