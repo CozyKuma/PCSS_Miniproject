@@ -14,27 +14,20 @@ using namespace std;
 typedef Character* characPtr;
 
 
-
+//Method for deciding who goes first in the beginning.
 void rollInitiative(Character* c1, Character* c2, Character* cArray[]){
 
-    int player1 = Dice::rollDice(1, 20);
-    int player2 = Dice::rollDice(1, 1);
-    if(player1 > player2){
+    int result = Dice::rollDice(1, 20);
+
+    if(result > 10){
 
         cArray[0] = c1;
         cArray[1] = c2;
         return;
-    }
-    if(player2 > player1){
-
+    }else{
         cArray[0] = c2;
         cArray[1] = c1;
         return;
-    }
-    else{
-
-        rollInitiative(c1, c2, cArray);
-
     }
 
 }
@@ -123,7 +116,7 @@ void startCombat(Character* c1, Character* c2){
             rollInitiative(c1, c2, turnOrder);
             player1 = turnOrder[0];
             player2 = turnOrder[1];
-
+            initiativeRolled = true;
         }
 
         if(swapTurn == false){
