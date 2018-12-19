@@ -122,10 +122,13 @@ int __cdecl main(void)
 
     // Receive until the peer shuts down the connection
     bool runFlag = true;
+    printf("runFlag active.\n");
+
+    std::string msg = "Welcome to the fight!";
+    send(ClientSocket1, msg.c_str(), strlen(msg.c_str()), 0);
+    send(ClientSocket2, msg.c_str(), strlen(msg.c_str()), 0);
     while(runFlag) {
-            printf("runFlag active");
-            std::string msg = "fuck this";
-            send(ClientSocket1, msg.c_str(), strlen(msg.c_str()), 0);
+
     }
 
     // shutdown the connection since we're done
