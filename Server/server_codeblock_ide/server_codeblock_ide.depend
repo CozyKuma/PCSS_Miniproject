@@ -7,11 +7,13 @@
 	<stdlib.h>
 	<stdio.h>
 
-1545205175 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\server\server_codeblock_ide\main.cpp
+1545217382 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\server\server_codeblock_ide\main.cpp
 	<iostream>
 	<windows.h>
 	<winsock2.h>
 	<ws2tcpip.h>
 	<stdlib.h>
 	<stdio.h>
+	<thread>
+	<string>
 
