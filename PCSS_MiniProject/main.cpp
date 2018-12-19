@@ -8,6 +8,7 @@
 
 
 
+
 using namespace std;
 
 typedef Character* characPtr;
@@ -145,7 +146,7 @@ void startCombat(Character* c1, Character* c2){
             activePlayer->changeStunned();
         }
         else{
-        cout << "Choose your ability by entering 1, 2 or 3" << endl;
+        cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
         cin >> abilityNumber;
         activePlayer->chooseAbility(abilityNumber, *inactivePlayer, *activePlayer);
         }

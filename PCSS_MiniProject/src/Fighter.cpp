@@ -14,32 +14,31 @@ void Fighter::slam(Character& target){
     int damage = 0;
     damage = Dice::rollDice(1, 10);
     target.takeDamage(damage);
-    cout<< "You use slam and deal " << damage << "points of damage to " << target.getName() <<endl;
+    cout<< "You use slam and deal " << damage << " points of damage to " << target.getName() <<endl;
 
 }
 
-/*void Fighter::reflect(Character& target, int damage){
+void Fighter::block(Character& self){
 
 
-    int result = rollDice(1, 3);
-    if (result == 1 || result == 2)
+    if (!self.getDefenseFlag())
     {
-        target.takeDamage(damage);
-        cout<< "You deal " << damage << "damage to " << target.getName() <<endl;
+        self.setDefense(2);
+        self.changeDefenseFlag();
+        cout<< "You raise your shield to block incoming attacks. Your defense has gone up" <<endl;
     }
-    else if (result == 3)
+    else
     {
-        self.takeDamage(damage);
-        cout<< "You receive " << damage << "damage." <<endl;
+        cout<< "You fail in covering your vital areas and your defense remain unchanged." <<endl;
     }
 
-}*/
+}
 void Fighter::stunningLeap(Character& target){
     int damage = 0;
     int result = 0;
-    damage = Dice::rollDice(1, 5);
-    result = Dice::rollDice(1,1);
-    if(result == 1 ||  result == 2){
+    damage = Dice::rollDice(1, 8);
+    result = Dice::rollDice(1,3);
+    if(result == 1){
         target.takeDamage(damage);
         target.setStunned(true);
         cout << "You leap into the air and deal a solid stunning blow and deal "<< damage << " points of damage to " << target.getName() <<endl;
@@ -58,7 +57,7 @@ void Fighter::chooseAbility(int ability, Character& target, Character& self)
             slam(target);
             break;
         case 2:
-            //reflect(target);
+            block(self);
             break;
         case 3:
             stunningLeap(target);

@@ -38,7 +38,7 @@ void Wizard::lightningStrike(Character& target, Character& self)
 {
     int damage = 0;
     damage = Dice::rollDice(3, 10);
-    int result = Dice::rollDice(1, 1);
+    int result = Dice::rollDice(1, 3);
     if (result == 1 || result == 2)
     {
         target.takeDamage(damage);
