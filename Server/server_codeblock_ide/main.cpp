@@ -16,6 +16,8 @@
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
 
+//Prototype Functions
+void sendToAllClients(std::string message, SOCKET clientArray[]);
 
 int __cdecl main(void)
 {
@@ -126,9 +128,7 @@ int __cdecl main(void)
 
     // Welcome Message for both clients
     std::string msg = "Welcome to the fight!";
-    for(int i=0; i<2; i++) {
-        send(allClients[i], msg.c_str(), strlen(msg.c_str()), 0);
-    }
+    sendToAllClients(msg, allClients);
     while(runFlag) {
 
     }
@@ -158,4 +158,10 @@ int __cdecl main(void)
     WSACleanup();
 
     return 0;
+}
+
+void sendToAllClients(std::string message, SOCKET clientArray[]) {
+    for(int i=0; i<2; i++) {
+        send(clientArray[i], message.c_str(), strlen(message.c_str()), 0);
+    }
 }
