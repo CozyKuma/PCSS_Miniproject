@@ -38,7 +38,7 @@
 	"Character.h"
 	"ClassType.h"
 
-1545217515 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+1545219785 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
 	<iostream>
 	"Character.h"
 	"Archer.h"
@@ -80,7 +80,7 @@
 
 1542097257 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\dice.h
 
-1545217515 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
+1545219460 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\dice.cpp
 	"Dice.h"
 	<cstdlib>
 	<ctime>
