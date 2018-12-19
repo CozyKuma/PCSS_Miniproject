@@ -118,15 +118,17 @@ int __cdecl main(void)
     // No longer need server socket
     closesocket(ListenSocket);
 
+    // Array for clients
+    SOCKET allClients[2] = {ClientSocket1, ClientSocket2};
 
-
-    // Receive until the peer shuts down the connection
     bool runFlag = true;
     printf("runFlag active.\n");
 
+    // Welcome Message for both clients
     std::string msg = "Welcome to the fight!";
-    send(ClientSocket1, msg.c_str(), strlen(msg.c_str()), 0);
-    send(ClientSocket2, msg.c_str(), strlen(msg.c_str()), 0);
+    for(int i=0; i<2; i++) {
+        send(allClients[i], msg.c_str(), strlen(msg.c_str()), 0);
+    }
     while(runFlag) {
 
     }
