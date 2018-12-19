@@ -1,7 +1,11 @@
 #include <iostream>
 #include "Character.h"
+#include "Archer.h"
+
 #include "Wizard.h"
 #include "Fighter.h"
+#include "Ranger.h"
+
 
 
 using namespace std;
@@ -33,29 +37,32 @@ void rollInitiative(Character* c1, Character* c2, Character* cArray[]){
     }
 
 }
-void restartGame(Character* activePlayer, Character* inactivePlayer){
+bool restartGame(Character* activePlayer, Character* inactivePlayer){
     int exit;
     cout << "Do you want to play again? Yes/no? (1/2)" << endl;
     cin >> exit;
     if (exit == 1)
     {
-        activePlayer->setHealth(100);
-        inactivePlayer->setHealth(100);
-
+        return true;
+    }
+    else{
+        return false;
     }
 }
 
-void checkHealth(Character* activePlayer, Character* inactivePlayer){
+bool checkHealth(Character* activePlayer, Character* inactivePlayer){
     if (activePlayer->getHealth() <= 0){
         cout << inactivePlayer->getName() <<" has triumphed!" << endl;
         cout << "You have lost" << endl;
-        restartGame(activePlayer, inactivePlayer);
+        //restartGame(activePlayer, inactivePlayer);
+        return false;
     }
     else if(inactivePlayer->getHealth()<= 0){
         cout << "You have won!" << endl;
-        restartGame(activePlayer, inactivePlayer);
+       // restartGame(activePlayer, inactivePlayer);
+        return false;
     }
-    return;
+    return true;
 }
 
 
@@ -94,6 +101,7 @@ void startCombat(Character* c1, Character* c2){
 
     bool gameRuns = true;
     bool initiativeRolled = false;
+    int turnCounter = 1;
 
     Character* turnOrder[2];
     Character* player1;
@@ -128,18 +136,30 @@ void startCombat(Character* c1, Character* c2){
             inactivePlayer = player1;
             swapTurn = false;
         }
-
+        cout << "--------TURN " << turnCounter <<"--------" << endl;
         int abilityNumber;
         cout << "You currently have: " << activePlayer->getHealth() << " HP" << endl;
         cout << inactivePlayer->getName()<<" currently has: " << inactivePlayer->getHealth() << " HP" << endl;
+        if(activePlayer->isStunned()){
+            cout << "You are stunned and your turn has been skipped" << endl;
+            activePlayer->changeStunned();
+        }
+        else{
         cout << "Choose your ability by entering 1, 2 or 3" << endl;
         cin >> abilityNumber;
-
         activePlayer->chooseAbility(abilityNumber, *inactivePlayer, *activePlayer);
+        }
+        gameRuns = checkHealth(activePlayer, inactivePlayer);
+        turnCounter += 1;
 
-        checkHealth(activePlayer, inactivePlayer);
-
-
+        if(!gameRuns){
+            gameRuns = restartGame(activePlayer, inactivePlayer);
+            activePlayer->setHealth(100);
+            inactivePlayer->setHealth(100);
+            activePlayer->setStunned(false);
+            inactivePlayer->setStunned(false);
+            turnCounter = 1;
+        }
     }
 }
 int main()
@@ -148,11 +168,11 @@ int main()
     characPtr player2;
     Wizard* w1 = new Wizard("WizardMan");
     Fighter* f2 = new Fighter("FighterMan");
+  //  Ranger* r2 = new Ranger("RangerMan");
     player1 = w1;
     player2 = f2;
   //  player1->chooseAbility(1, *player2, *player1);
     startCombat(player1, player2);
-//    characterCreation();
 
     return 0;
 

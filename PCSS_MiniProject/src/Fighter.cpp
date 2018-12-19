@@ -4,6 +4,7 @@ Fighter::Fighter(string newName)
 : Character(newName)
 {
 }
+
 Fighter::Fighter() : Character()
 {
 
@@ -13,7 +14,7 @@ void Fighter::slam(Character& target){
     int damage = 0;
     damage = Dice::rollDice(1, 10);
     target.takeDamage(damage);
-    cout<< "You use slam and dealt " << damage << "points of damage to " << target.getName() <<endl;
+    cout<< "You use slam and deal " << damage << "points of damage to " << target.getName() <<endl;
 
 }
 
@@ -24,16 +25,30 @@ void Fighter::slam(Character& target){
     if (result == 1 || result == 2)
     {
         target.takeDamage(damage);
-        cout<< "You gave " << damage << "damage to " << target.getName() <<endl;
+        cout<< "You deal " << damage << "damage to " << target.getName() <<endl;
     }
     else if (result == 3)
     {
         self.takeDamage(damage);
-        cout<< "You received " << damage << "damage." <<endl;
+        cout<< "You receive " << damage << "damage." <<endl;
     }
 
 }*/
 void Fighter::stunningLeap(Character& target){
+    int damage = 0;
+    int result = 0;
+    damage = Dice::rollDice(1, 5);
+    result = Dice::rollDice(1,1);
+    if(result == 1 ||  result == 2){
+        target.takeDamage(damage);
+        target.setStunned(true);
+        cout << "You leap into the air and deal a solid stunning blow and deal "<< damage << " points of damage to " << target.getName() <<endl;
+
+    }
+    else{
+        target.takeDamage(damage);
+        cout << "You leap into the air, however, your execution is sloppy and you fail to land a stunning blow, but still deal " << damage << " points of damage to " << target.getName() <<endl;
+    }
 
 }
 void Fighter::chooseAbility(int ability, Character& target, Character& self)
@@ -46,7 +61,7 @@ void Fighter::chooseAbility(int ability, Character& target, Character& self)
             //reflect(target);
             break;
         case 3:
-//            stunningLeap():
+            stunningLeap(target);
             break;
         default:
             cout << "choose ability default" << endl;

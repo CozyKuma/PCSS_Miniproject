@@ -14,7 +14,7 @@ void Wizard::fireball(Character& target)
     int damage = 0;
     damage = Dice::rollDice(1, 10);
     target.takeDamage(damage);
-    cout << "You cast fireball and dealt " << damage << " points of damage to " << target.getName() <<endl;
+    cout << "You cast fireball and deal " << damage << " points of damage to " << target.getName() <<endl;
     damage = 0;
 }
 
@@ -25,7 +25,7 @@ void Wizard::spellShield(Character& self)
     {
         self.setDefense(2);
         self.changeDefenseFlag();
-        cout<< "You cast spell shield, your defense went up" <<endl;
+        cout<< "You cast spell shield, your defense go up" <<endl;
     }
     else
     {
@@ -38,16 +38,16 @@ void Wizard::lightningStrike(Character& target, Character& self)
 {
     int damage = 0;
     damage = Dice::rollDice(3, 10);
-    int result = Dice::rollDice(1, 3);
+    int result = Dice::rollDice(1, 1);
     if (result == 1 || result == 2)
     {
         target.takeDamage(damage);
-        cout<< "You cast lightning strike and dealt " << damage << "damage to " << target.Character::getName() <<endl;
+        cout<< "You cast lightning strike and deal " << damage << " damage to " << target.Character::getName() <<endl;
     }
-    else if (result == 3)
+    else
     {
         self.takeDamage(damage);
-        cout<< "You received " << damage << "damage." <<endl;
+        cout<< "You accidentally cast lightning strike on yourself and receive " << damage << " damage." <<endl;
     }
 }
 

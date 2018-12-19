@@ -38,13 +38,15 @@
 	"Character.h"
 	"ClassType.h"
 
-1545131432 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
+1545213882 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\main.cpp
 	<iostream>
 	"Character.h"
+	"Archer.h"
 	"Wizard.h"
 	"Fighter.h"
+	"Ranger.h"
 
-1542797857 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
+1545211667 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\character.h
 	<string>
 	<iostream>
 	"Dice.h"
@@ -52,25 +54,25 @@
 1541415594 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\classtype.h
 	"Character.h"
 
-1542797857 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
+1545211592 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\character.cpp
 	"Character.h"
 
 1541072145 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\classtype.cpp
 	"ClassType.h"
 	"Character.h"
 
-1543573655 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
+1545214516 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\fighter.cpp
 	"Fighter.h"
 
 1543573521 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\fighter.h
 	"Character.h"
 
-1542097257 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
+1545209650 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\ranger.cpp
 
-1541066588 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
-	<ClassType.h>
+1545209650 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\ranger.h
+	"Character.h"
 
-1543574219 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
+1545214516 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\wizard.cpp
 	"Wizard.h"
 
 1542112713 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\wizard.h
@@ -123,4 +125,9 @@
 	"Character.h"
 	"Wizard.h"
 	<cstdlib>
+
+1545209935 source:c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\src\archer.cpp
+
+1545209935 c:\users\emils\documents\github\pcss_miniproject\pcss_miniproject\include\archer.h
+	"Character.h"
 
