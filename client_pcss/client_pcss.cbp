@@ -2,28 +2,26 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="PCSS_MiniProject" />
+		<Option title="client_pcss" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/PCSS_MiniProject" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/client_pcss" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/PCSS_MiniProject" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/client_pcss" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -34,23 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="include/Character.h" />
-		<Unit filename="include/Dice.h" />
-		<Unit filename="include/Fighter.h" />
-		<Unit filename="include/Game.h" />
-		<Unit filename="include/Ranger.h" />
-		<Unit filename="include/Wizard.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Character.cpp" />
-		<Unit filename="src/Dice.cpp" />
-		<Unit filename="src/Fighter.cpp" />
-		<Unit filename="src/Game.cpp" />
-		<Unit filename="src/Ranger.cpp" />
-		<Unit filename="src/Wizard.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
+			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
