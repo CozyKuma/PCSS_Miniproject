@@ -11,6 +11,7 @@ Character::Character(string newName):
     dexterity(10),
     intelligence(10),
     alive(true),
+    stunned(false),
     defenseFlag(false){}
 
 Character::Character():
@@ -22,6 +23,7 @@ Character::Character():
     dexterity(10),
     intelligence(10),
     alive(true),
+    stunned(false),
     defenseFlag(false){}
 
 
@@ -59,6 +61,27 @@ Character::Character():
             {
                 alive = true;
             }
+        }
+
+        bool Character::isStunned()
+        {
+            return stunned;
+        }
+
+        void Character::changeStunned()
+        {
+            if (stunned == true){
+
+                stunned = false;
+            }
+            else{
+                stunned = true;
+            }
+        }
+
+        void Character::setStunned(bool stun){
+
+            stunned = stun;
         }
 
         int Character::getMaxHealth()

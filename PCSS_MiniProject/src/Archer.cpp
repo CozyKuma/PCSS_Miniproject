@@ -1,31 +1,31 @@
-/*#include "Ranger.h"
+/*#include "Archer.h"
 
-Ranger::Ranger(string newName)
+Archer::Archer(string newName)
 : Character(newName)
 {
 
 }
 
-Ranger::Ranger() : Character()
+Archer::Archer() : Character()
 {
 
 }
 
-void Ranger::aimedShot(Character& target){
+void Archer::aimedShot(Character& target){
     int damage = 0;
     damage = rollDice(1, 10);
     target.takeDamage(damage);
     cout<< "You dealt " << damage << "points of damage to " << target.getName() <<endl;
 }
 
-void Ranger::bandage(Character& self){
+void Archer::bandage(Character& self){
     int heal = 0;
     heal = -1*rollDice(1, 8);
     self.takeDamage(heal);
     cout<< "You healed " << heal << "HP"<<endl;
 }
 
-void Ranger::bearTrap(){
+void Archer::bearTrap(){
     trapPlaced = true;
 }
 void chooseAbility(int ability, Character& target, Character& self){
@@ -46,4 +46,5 @@ void chooseAbility(int ability, Character& target, Character& self){
     }
 
 }
+
 */

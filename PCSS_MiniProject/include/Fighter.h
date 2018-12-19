@@ -10,7 +10,7 @@ class Fighter : public Character
         Fighter(string newName);
         Fighter();
         void slam(Character& target);
-        void reflect(Character& target);
+        void block(Character& self);
         void stunningLeap(Character& target);
         void chooseAbility(int ability, Character& target, Character& self);
     protected:

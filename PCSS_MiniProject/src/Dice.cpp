@@ -6,13 +6,13 @@
 
 int Dice::rollDice(int amount, int sides)
 {
+    srand(time(0));
     int result = 0;
     for (int i = 0; i < amount; i++)
     {
-      //srand(time(0));
-      //result = rand() % sides + 1;
-      result = amount + sides;
+      result += rand() % sides + 1;
     }
     return result;
+
 
 }

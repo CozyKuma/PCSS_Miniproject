@@ -16,6 +16,7 @@ class Character
         int dexterity;
         int intelligence;
         bool alive;
+        bool stunned;
         int defense;
         bool defenseFlag;
 
@@ -30,6 +31,9 @@ class Character
         void setMaxHealth(int MHP);
         bool isAlive();
         void changeAlive();
+        bool isStunned();
+        void changeStunned();
+        void setStunned(bool stun);
         void printStats();
         int getDefense();
         void setDefense(int def);
