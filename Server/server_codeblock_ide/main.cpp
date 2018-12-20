@@ -13,7 +13,7 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
-#define DEFAULT_BUFLEN 512
+#define DEFAULT_BUFLEN 1024
 #define DEFAULT_PORT "27015"
 
 //Prototype Functions
@@ -128,6 +128,11 @@ int __cdecl main(void)
     // Welcome Message and character selection for both clients
     std::string msg = "Welcome to the fight!";
     sendToAllClients(msg, allClients);
+    std::cout << msg << std::endl;
+    recv(ClientSocket1, recvbuf, sizeof(recvbuf), 0);
+    std::cout << recvbuf << std::endl;
+    recv(ClientSocket2, recvbuf, sizeof(recvbuf), 0);
+    std::cout << recvbuf << std::endl;
     char* charVar1 = (char*)1;
     char* charVar2 = (char*)2;
     std::cout << charVar1 << std::endl;
@@ -178,7 +183,15 @@ int __cdecl main(void)
 }
 
 void sendToAllClients(std::string message, SOCKET clientArray[]) {
+    int myISendResult;
+    char myInput[1024];
+    strcpy(myInput, message.c_str());
     for(int i=0; i<2; i++) {
-        send(clientArray[i], message.c_str(), sizeof(message.c_str()), 0);
+        myISendResult = send(clientArray[i], myInput, (int)sizeof(myInput), 0);
+        if(myISendResult == SOCKET_ERROR) {
+            std::cout << "send failed with error " << WSAGetLastError() << std::endl;
+            closesocket(clientArray[i]);
+            WSACleanup();
+        }
     }
 }

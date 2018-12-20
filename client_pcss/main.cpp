@@ -20,7 +20,7 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 
-#define DEFAULT_BUFLEN 512
+#define DEFAULT_BUFLEN 1024
 #define DEFAULT_PORT "27015"
 
 typedef Character* characPtr;
@@ -34,10 +34,12 @@ int __cdecl main(int argc, char **argv)
     struct addrinfo *result = NULL,
                          *ptr = NULL,
                           hints;
-    char *sendbuf = "this is a test";
+    char sendbuf[DEFAULT_BUFLEN];
     char recvbuf[DEFAULT_BUFLEN];
     int iResult;
     int recvbuflen = DEFAULT_BUFLEN;
+    memset(recvbuf, '\0', DEFAULT_BUFLEN);
+    memset(sendbuf, '\0', DEFAULT_BUFLEN);
 
     // Validate the parameters
     if (argc != 2)
@@ -119,20 +121,32 @@ int __cdecl main(int argc, char **argv)
     int playerOrder = 0;
     string classType;
     // Welcome and character select
-    while(true)
+    do
     {
         iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
         if(iResult > 0)
         {
+            string recvString(recvbuf);
             cout << recvbuf << endl;
             memset(recvbuf, 0, recvbuflen);
+            string confirm = "Received";
+            send(ConnectSocket, confirm.c_str(), sizeof(confirm.c_str()), 0);
+            break;
+        } else if(iResult == 0) {
+            printf("Zero Received");
         } else {
-            cout << "Receive failed with error " << WSAGetLastError() << endl;
+            //cout << "Receive failed with error " << WSAGetLastError() << endl;
         }
-    }
+    } while (iResult > 0);
 
     // Receive order of players
-    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    do{
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if(iResult > 0) {
+            playerOrder = (int)recvbuf;
+            break;
+        }
+    } while (iResult > 0);
     //playerOrder = recvbuf;
     cout << "Received from server: " << recvbuf << endl;
     if(playerOrder == 1 || playerOrder == 2)
