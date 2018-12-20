@@ -20,12 +20,21 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 
-#define DEFAULT_BUFLEN 1024
+#define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
 
 typedef Character* characPtr;
 
 string characterCreation(Character &playerCharacter);
+//string receiveAll(SOCKET s, char *buf, int *len);
+string receiveAll(SOCKET s);
+void sendAll(SOCKET s, string msg);
+
+char recvbuf[DEFAULT_BUFLEN];
+int recvbuflen = DEFAULT_BUFLEN;
+char sendbuf[DEFAULT_BUFLEN];
+
+
 
 int __cdecl main(int argc, char **argv)
 {
@@ -34,12 +43,9 @@ int __cdecl main(int argc, char **argv)
     struct addrinfo *result = NULL,
                          *ptr = NULL,
                           hints;
-    char sendbuf[DEFAULT_BUFLEN];
-    char recvbuf[DEFAULT_BUFLEN];
     int iResult;
-    int recvbuflen = DEFAULT_BUFLEN;
-    memset(recvbuf, '\0', DEFAULT_BUFLEN);
-    memset(sendbuf, '\0', DEFAULT_BUFLEN);
+    //memset(recvbuf, '\0', DEFAULT_BUFLEN);
+    //memset(sendbuf, '\0', DEFAULT_BUFLEN);
 
     // Validate the parameters
     if (argc != 2)
@@ -117,11 +123,12 @@ int __cdecl main(int argc, char **argv)
     printf("Bytes Sent: %d\n", iResult);
 
 
+    //setsockopt(ConnectSocket, SOL_SOCKET, SO_RCVTIMEO,  recvbuf, recvbuflen);
     characPtr player;
-    int playerOrder = 0;
+    string playerOrder = "0";
     string classType;
     // Welcome and character select
-    do
+    /*do
     {
         iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
         if(iResult > 0)
@@ -129,65 +136,80 @@ int __cdecl main(int argc, char **argv)
             string recvString(recvbuf);
             cout << recvbuf << endl;
             memset(recvbuf, 0, recvbuflen);
-            string confirm = "Received";
-            send(ConnectSocket, confirm.c_str(), sizeof(confirm.c_str()), 0);
+            //string confirm = "Received";
+            //send(ConnectSocket, confirm.c_str(), sizeof(confirm.c_str()), 0);
             break;
-        } else if(iResult == 0) {
+        }
+        else if(iResult == 0)
+        {
             printf("Zero Received");
-        } else {
+        }
+        else
+        {
             //cout << "Receive failed with error " << WSAGetLastError() << endl;
         }
-    } while (iResult > 0);
+    }
+    while (iResult > 0); */
+    string myString = receiveAll(ConnectSocket);
+    cout << myString << endl;
+
 
     // Receive order of players
-    do{
+    /*do
+    {
         iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if(iResult > 0) {
-            playerOrder = (int)recvbuf;
+        if(iResult > 0)
+        {
+            playerOrder = recvbuf;
+            printf(recvbuf);
             break;
         }
-    } while (iResult > 0);
-    //playerOrder = recvbuf;
-    cout << "Received from server: " << recvbuf << endl;
-    if(playerOrder == 1 || playerOrder == 2)
+    }
+    while (iResult > 0);*/
+
+    myString = receiveAll(ConnectSocket);
+    //cout << myString << endl;
+
+    playerOrder = myString;
+
+    if(playerOrder == "1" || playerOrder == "2")
     {
-        cout << endl << "You are player " << playerOrder << endl;
+        cout << "You are player #" << playerOrder << endl;
     }
     else
     {
         cout << "Something went wrong. You are player ?? " << playerOrder << endl;
     }
 
-    recv(ConnectSocket, recvbuf, recvbuflen, 0);
-    cout << recvbuf << endl;
-    if(playerOrder == 1)
+
+    // Players chose characters.
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl;
+    if(playerOrder == "1")
     {
         // classType = characterCreation(player);
         Wizard* w1 = new Wizard("WizardMan");
         player = w1;
         classType = "Wizard";
-        send(ConnectSocket, classType.c_str(), strlen(classType.c_str()), 0);
-    }
-    else if (playerOrder == 2)
-    {
-        recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        cout << recvbuf << endl;
+        sendAll(ConnectSocket, classType);
+        //send(ConnectSocket, p1Input, sizeof(p1Input), 0);
     }
 
-    if(playerOrder == 2)
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl;
+    if(playerOrder == "2")
     {
         // classType = characterCreation(player);
         Fighter* f1 = new Fighter("FighterMan");
         player = f1;
         classType = "Fighter";
-        send(ConnectSocket, classType.c_str(), strlen(classType.c_str()), 0);
-    }
-    else if (playerOrder == 1)
-    {
-        recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        cout << recvbuf << endl;
+        sendAll(ConnectSocket, classType);
+        //char p2Input[512];
+        //strcpy(p2Input, classType.c_str());
+        //send(ConnectSocket, p2Input, sizeof(p2Input), 0);
     }
 
+    cout << "Characters chosen" << endl;
 
     // Receive until the peer closes the connection
     do
@@ -255,3 +277,56 @@ string characterCreation(Character &playerCharacter)
         }
     }
 }
+
+string receiveAll(SOCKET s) {
+    memset(recvbuf, 0, DEFAULT_BUFLEN);
+    string message;
+    int tempIResult = recv(s, recvbuf, recvbuflen, 0);
+    if (tempIResult != 0) {
+        message = recvbuf;
+        message = message.c_str();
+        return message;
+    }
+}
+
+void sendAll(SOCKET s, string msg) {
+    memset(sendbuf, 0, DEFAULT_BUFLEN);
+    int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
+    //cout << "Client: - " << msg << " - has been sent" << endl;
+    if (tempIResult <= 0) {
+        cout << "Send failed" << endl;
+    }
+}
+
+/*string receiveAll(SOCKET s, char *buf, int *len)
+{
+    int total = 0;
+    int left = *len;
+    int tempIResult;
+    string result;
+    while (total < *len) {
+        tempIResult = recv(s, buf, left, 0);
+        if (tempIResult <= 0) {break;}
+        total +=tempIResult;
+        left -= tempIResult;
+    }
+    result = (string)buf;
+    memset(buf, 0, *len);
+    return result;
+    do
+    {
+        tempIResult = recv(s, recvbuf, recvbuflen, 0);
+        if(tempIResult > 0)
+        {
+            result = recvbuf;
+            memset(recvbuf, 0, recvbuflen);
+            break;
+        }
+        else
+        {
+
+        }
+    }
+    while (total != recvbuflen);
+    return result;
+}*/

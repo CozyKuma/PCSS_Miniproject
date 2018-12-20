@@ -13,11 +13,17 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
-#define DEFAULT_BUFLEN 1024
+#define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
 
 //Prototype Functions
-void sendToAllClients(std::string message, SOCKET clientArray[]);
+void sendToAllClients(std::string msg, SOCKET clientArray[]);
+void sendAll(SOCKET s, std::string msg);
+std::string receiveAll(SOCKET s);
+
+char recvbuf[DEFAULT_BUFLEN];
+int recvbuflen = DEFAULT_BUFLEN;
+char sendbuf[DEFAULT_BUFLEN];
 
 int __cdecl main(void)
 {
@@ -32,8 +38,6 @@ int __cdecl main(void)
     struct addrinfo hints;
 
     int iSendResult;
-    char recvbuf[DEFAULT_BUFLEN];
-    int recvbuflen = DEFAULT_BUFLEN;
 
     // Initialize Winsock
     iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -129,28 +133,41 @@ int __cdecl main(void)
     std::string msg = "Welcome to the fight!";
     sendToAllClients(msg, allClients);
     std::cout << msg << std::endl;
-    recv(ClientSocket1, recvbuf, sizeof(recvbuf), 0);
+    /*recv(ClientSocket1, recvbuf, sizeof(recvbuf), 0);
     std::cout << recvbuf << std::endl;
     recv(ClientSocket2, recvbuf, sizeof(recvbuf), 0);
-    std::cout << recvbuf << std::endl;
-    char* charVar1 = (char*)1;
-    char* charVar2 = (char*)2;
-    std::cout << charVar1 << std::endl;
-    std::cout << charVar2 << std::endl;
-    send(ClientSocket1, charVar1, sizeof(charVar1), 0);
-    send(ClientSocket2, charVar2, sizeof(charVar2), 0);
-    std::string player1Msg = "Please choose your character: ";
+    std::cout << recvbuf << std::endl;*/
+    char* charVar1 = "1";
+    char* charVar2 = "2";
+    sendAll(ClientSocket1, charVar1);
+    sendAll(ClientSocket2, charVar2);
+    //send(ClientSocket1, charVar1, sizeof(charVar1), 0);
+    //send(ClientSocket2, charVar2, sizeof(charVar2), 0);
+
+    printf("Server: Now to player 1\n");
+    std::string player1Msg = "Please choose your character:";
     std::string player2Msg = "Player 1 is choosing their character.";
-    send(ClientSocket1, player1Msg.c_str(), strlen(player1Msg.c_str()), 0);
-    send(ClientSocket2, player2Msg.c_str(), strlen(player2Msg.c_str()), 0);
-    recv(ClientSocket1, recvbuf, recvbuflen, 0);
+    sendAll(ClientSocket1, player1Msg);
+    sendAll(ClientSocket2, player2Msg);
+    //send(ClientSocket1, player1Msg.c_str(), sizeof(player1Msg.c_str()), 0);
+    //send(ClientSocket2, player2Msg.c_str(), sizeof(player2Msg.c_str()), 0);
+    receiveAll(ClientSocket1);
+    //recv(ClientSocket1, recvbuf, recvbuflen, 0);
     msg = "Player 1 has chosen " + (std::string)recvbuf;
     sendToAllClients(msg, allClients);
+
+    printf("Server: Now to player 2\n");
     player2Msg = "Please choose your character now: ";
-    player2Msg = "Player 2 is now choosing their character.";
-    recv(ClientSocket2, recvbuf, recvbuflen, 0);
+    player1Msg = "Player 2 is now choosing their character.";
+    sendAll(ClientSocket1, player1Msg);
+    sendAll(ClientSocket2, player2Msg);
+    //send(ClientSocket1, player1Msg.c_str(), sizeof(player1Msg.c_str()), 0);
+    //send(ClientSocket2, player2Msg.c_str(), sizeof(player2Msg.c_str()), 0);
+    receiveAll(ClientSocket2);
+    //recv(ClientSocket2, recvbuf, recvbuflen, 0);
     msg = "Player 2 has chosen " + (std::string)recvbuf;
     sendToAllClients(msg,  allClients);
+    std::cout << "Characters chosen" << std::endl;
     while(gameRuns) {
 
     }
@@ -182,16 +199,35 @@ int __cdecl main(void)
     return 0;
 }
 
-void sendToAllClients(std::string message, SOCKET clientArray[]) {
-    int myISendResult;
-    char myInput[1024];
-    strcpy(myInput, message.c_str());
+void sendToAllClients(std::string msg, SOCKET clientArray[]) {
+    memset(sendbuf, 0, DEFAULT_BUFLEN);
+    int tempIResult;
     for(int i=0; i<2; i++) {
-        myISendResult = send(clientArray[i], myInput, (int)sizeof(myInput), 0);
-        if(myISendResult == SOCKET_ERROR) {
+        tempIResult = send(clientArray[i], msg.c_str(), strlen(msg.c_str()), 0);
+        if(tempIResult == SOCKET_ERROR) {
             std::cout << "send failed with error " << WSAGetLastError() << std::endl;
             closesocket(clientArray[i]);
             WSACleanup();
         }
+    }
+}
+
+void sendAll(SOCKET s, std::string msg) {
+    memset(sendbuf, 0, DEFAULT_BUFLEN);
+    int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
+     //std::cout << "Client: - " << msg << " - has been sent" << std::endl;
+    if (tempIResult <= 0) {
+        std::cout << "Send failed" << std::endl;
+    }
+}
+
+std::string receiveAll(SOCKET s) {
+    memset(recvbuf, 0, DEFAULT_BUFLEN);
+    std::string message;
+    int tempIResult = recv(s, recvbuf, recvbuflen, 0);
+    if (tempIResult != 0) {
+        message = recvbuf;
+        message = message.c_str();
+        return message;
     }
 }
