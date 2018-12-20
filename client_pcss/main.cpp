@@ -119,12 +119,20 @@ int __cdecl main(int argc, char **argv)
     int playerOrder = 0;
     string classType;
     // Welcome and character select
-    recv(ConnectSocket, recvbuf, recvbuflen, 0);
-    cout << recvbuf << endl;
-    memset(recvbuf, 0, recvbuflen);
+    while(true)
+    {
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if(iResult > 0)
+        {
+            cout << recvbuf << endl;
+            memset(recvbuf, 0, recvbuflen);
+        } else {
+            cout << "Receive failed with error " << WSAGetLastError() << endl;
+        }
+    }
 
     // Receive order of players
-    recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
     //playerOrder = recvbuf;
     cout << "Received from server: " << recvbuf << endl;
     if(playerOrder == 1 || playerOrder == 2)
