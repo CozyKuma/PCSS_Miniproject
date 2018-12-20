@@ -179,6 +179,6 @@ int __cdecl main(void)
 
 void sendToAllClients(std::string message, SOCKET clientArray[]) {
     for(int i=0; i<2; i++) {
-        send(clientArray[i], message.c_str(), strlen(message.c_str()), 0);
+        send(clientArray[i], message.c_str(), sizeof(message.c_str()), 0);
     }
 }

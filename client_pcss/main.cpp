@@ -121,6 +121,7 @@ int __cdecl main(int argc, char **argv)
     // Welcome and character select
     recv(ConnectSocket, recvbuf, recvbuflen, 0);
     cout << recvbuf << endl;
+    memset(recvbuf, 0, recvbuflen);
 
     // Receive order of players
     recv(ConnectSocket, recvbuf, recvbuflen, 0);
