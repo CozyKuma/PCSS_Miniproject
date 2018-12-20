@@ -128,12 +128,14 @@ int __cdecl main(void)
     // Welcome Message and character selection for both clients
     std::string msg = "Welcome to the fight!";
     sendToAllClients(msg, allClients);
-    std::string player1Msg = "1";
-    std::string player2Msg = "2";
-    send(ClientSocket1, player1Msg.c_str(), strlen(player1Msg.c_str()), 0);
-    send(ClientSocket2, player2Msg.c_str(), strlen(player2Msg.c_str()), 0);
-    player1Msg = "Please choose your character: ";
-    player2Msg = "Player 1 is choosing their character.";
+    char* charVar1 = (char*)1;
+    char* charVar2 = (char*)2;
+    std::cout << charVar1 << std::endl;
+    std::cout << charVar2 << std::endl;
+    send(ClientSocket1, charVar1, sizeof(charVar1), 0);
+    send(ClientSocket2, charVar2, sizeof(charVar2), 0);
+    std::string player1Msg = "Please choose your character: ";
+    std::string player2Msg = "Player 1 is choosing their character.";
     send(ClientSocket1, player1Msg.c_str(), strlen(player1Msg.c_str()), 0);
     send(ClientSocket2, player2Msg.c_str(), strlen(player2Msg.c_str()), 0);
     recv(ClientSocket1, recvbuf, recvbuflen, 0);
