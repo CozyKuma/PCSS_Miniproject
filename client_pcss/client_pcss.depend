@@ -1,8 +1,1 @@
 # depslib dependency file v1.0
-1545221202 source:c:\users\no\onedrive\dokumenter\github\pcss_miniproject\client_pcss\main.cpp
-	<windows.h>
-	<winsock2.h>
-	<ws2tcpip.h>
-	<stdlib.h>
-	<stdio.h>
-
