@@ -123,13 +123,28 @@ int __cdecl main(void)
     // Array for clients
     SOCKET allClients[2] = {ClientSocket1, ClientSocket2};
 
-    bool runFlag = true;
-    printf("runFlag active.\n");
+    bool gameRuns = true;
 
-    // Welcome Message for both clients
+    // Welcome Message and character selection for both clients
     std::string msg = "Welcome to the fight!";
     sendToAllClients(msg, allClients);
-    while(runFlag) {
+    std::string player1Msg = "1";
+    std::string player2Msg = "2";
+    send(ClientSocket1, player1Msg.c_str(), strlen(player1Msg.c_str()), 0);
+    send(ClientSocket2, player2Msg.c_str(), strlen(player2Msg.c_str()), 0);
+    player1Msg = "Please choose your character: ";
+    player2Msg = "Player 1 is choosing their character.";
+    send(ClientSocket1, player1Msg.c_str(), strlen(player1Msg.c_str()), 0);
+    send(ClientSocket2, player2Msg.c_str(), strlen(player2Msg.c_str()), 0);
+    recv(ClientSocket1, recvbuf, recvbuflen, 0);
+    msg = "Player 1 has chosen " + (std::string)recvbuf;
+    sendToAllClients(msg, allClients);
+    player2Msg = "Please choose your character now: ";
+    player2Msg = "Player 2 is now choosing their character.";
+    recv(ClientSocket2, recvbuf, recvbuflen, 0);
+    msg = "Player 2 has chosen " + (std::string)recvbuf;
+    sendToAllClients(msg,  allClients);
+    while(gameRuns) {
 
     }
 
