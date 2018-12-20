@@ -124,8 +124,8 @@ int __cdecl main(int argc, char **argv)
 
     // Receive order of players
     recv(ConnectSocket, recvbuf, recvbuflen, 0);
-    playerOrder = (int)recvbuf;
-    cout << "Received from server: " << playerOrder << endl;
+    //playerOrder = recvbuf;
+    cout << "Received from server: " << recvbuf << endl;
     if(playerOrder == 1 || playerOrder == 2)
     {
         cout << endl << "You are player " << playerOrder << endl;
