@@ -194,7 +194,11 @@ int __cdecl main(int argc, char **argv)
         sendAll(ConnectSocket, classType);
         //send(ConnectSocket, p1Input, sizeof(p1Input), 0);
     }
+    // Feedback from server
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl;
 
+    // Next character
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
     if(playerOrder == "2")
@@ -208,8 +212,9 @@ int __cdecl main(int argc, char **argv)
         //strcpy(p2Input, classType.c_str());
         //send(ConnectSocket, p2Input, sizeof(p2Input), 0);
     }
-
-    cout << "Characters chosen" << endl;
+    // Feedback from server
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl;
 
     // Receive until the peer closes the connection
     do
