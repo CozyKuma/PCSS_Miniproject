@@ -126,50 +126,73 @@ int __cdecl main(void)
 
     // Array for clients
     SOCKET allClients[2] = {ClientSocket1, ClientSocket2};
-
     bool gameRuns = true;
 
     // Welcome Message and character selection for both clients
     std::string msg = "Welcome to the fight!";
     sendToAllClients(msg, allClients);
     std::cout << msg << std::endl;
-    /*recv(ClientSocket1, recvbuf, sizeof(recvbuf), 0);
-    std::cout << recvbuf << std::endl;
-    recv(ClientSocket2, recvbuf, sizeof(recvbuf), 0);
-    std::cout << recvbuf << std::endl;*/
+
+    // Order of players
     char* charVar1 = "1";
     char* charVar2 = "2";
     sendAll(ClientSocket1, charVar1);
     sendAll(ClientSocket2, charVar2);
-    //send(ClientSocket1, charVar1, sizeof(charVar1), 0);
-    //send(ClientSocket2, charVar2, sizeof(charVar2), 0);
 
+    // Player 1 chooses a character
     printf("Server: Now to player 1\n");
     std::string player1Msg = "Please choose your character:";
     std::string player2Msg = "Player 1 is choosing their character.";
     sendAll(ClientSocket1, player1Msg);
     sendAll(ClientSocket2, player2Msg);
-    //send(ClientSocket1, player1Msg.c_str(), sizeof(player1Msg.c_str()), 0);
-    //send(ClientSocket2, player2Msg.c_str(), sizeof(player2Msg.c_str()), 0);
+
     receiveAll(ClientSocket1);
-    //recv(ClientSocket1, recvbuf, recvbuflen, 0);
+
     msg = "Player 1 has chosen " + (std::string)recvbuf;
     sendToAllClients(msg, allClients);
 
+    // Player 2 chooses a character
     printf("Server: Now to player 2\n");
     player2Msg = "Please choose your character now: ";
     player1Msg = "Player 2 is now choosing their character.";
     sendAll(ClientSocket1, player1Msg);
     sendAll(ClientSocket2, player2Msg);
-    //send(ClientSocket1, player1Msg.c_str(), sizeof(player1Msg.c_str()), 0);
-    //send(ClientSocket2, player2Msg.c_str(), sizeof(player2Msg.c_str()), 0);
+
     receiveAll(ClientSocket2);
-    //recv(ClientSocket2, recvbuf, recvbuflen, 0);
     msg = "Player 2 has chosen " + (std::string)recvbuf;
     sendToAllClients(msg,  allClients);
     std::cout << "Characters chosen" << std::endl;
-    while(gameRuns) {
 
+    // Combat and Game Logic runs in the following loop until a winner is determined.
+    int turnCounter = 0;
+    std::string turnString;
+    while(gameRuns) {
+        // Turn #
+        turnString = std::to_string(turnCounter);
+        sendToAllClients(turnString, allClients);
+
+        // Health Status
+        msg = receiveAll(ClientSocket1);
+        sendToAllClients("Player 1 has " + msg + " health left.", allClients);
+        msg = receiveAll(ClientSocket2);
+        sendToAllClients("Player 2 has " + msg + " health left.", allClients);
+
+        // Action Status - Both players
+        for(int i = 0; i < 2; i++) {
+            msg = receiveAll(allClients[i]);
+            if(msg == "stunned") {
+                sendToAllClients("Player " + std::to_string(i+1) + " is currently stunned.", allClients);
+            } else if(msg == "attack") {
+                msg = receiveAll(allClients[i]);
+                std::cout << "Player " << std::to_string(i+1) << " attacks for " << msg << " damage" << std::endl;
+            } else if(msg == "defense") {
+
+            }
+        }
+
+
+        turnCounter += 1;
+        break;
     }
 
     // shutdown the connection since we're done
@@ -199,6 +222,7 @@ int __cdecl main(void)
     return 0;
 }
 
+// Send all information to all connected Sockets
 void sendToAllClients(std::string msg, SOCKET clientArray[]) {
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     int tempIResult;
@@ -212,15 +236,16 @@ void sendToAllClients(std::string msg, SOCKET clientArray[]) {
     }
 }
 
+// Send all information to a Socket
 void sendAll(SOCKET s, std::string msg) {
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
-     //std::cout << "Client: - " << msg << " - has been sent" << std::endl;
     if (tempIResult <= 0) {
         std::cout << "Send failed" << std::endl;
     }
 }
 
+// Receive all information from a Socket
 std::string receiveAll(SOCKET s) {
     memset(recvbuf, 0, DEFAULT_BUFLEN);
     std::string message;

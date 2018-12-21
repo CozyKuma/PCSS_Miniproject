@@ -13,6 +13,7 @@
 #include "Wizard.h"
 #include "Fighter.h"
 #include "Ranger.h"
+#include "Dice.h"
 
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -127,54 +128,19 @@ int __cdecl main(int argc, char **argv)
     characPtr player;
     string playerOrder = "0";
     string classType;
-    // Welcome and character select
-    /*do
-    {
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if(iResult > 0)
-        {
-            string recvString(recvbuf);
-            cout << recvbuf << endl;
-            memset(recvbuf, 0, recvbuflen);
-            //string confirm = "Received";
-            //send(ConnectSocket, confirm.c_str(), sizeof(confirm.c_str()), 0);
-            break;
-        }
-        else if(iResult == 0)
-        {
-            printf("Zero Received");
-        }
-        else
-        {
-            //cout << "Receive failed with error " << WSAGetLastError() << endl;
-        }
-    }
-    while (iResult > 0); */
+    bool gameRuns = true;
+    // Welcome message
     string myString = receiveAll(ConnectSocket);
     cout << myString << endl;
 
 
     // Receive order of players
-    /*do
-    {
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if(iResult > 0)
-        {
-            playerOrder = recvbuf;
-            printf(recvbuf);
-            break;
-        }
-    }
-    while (iResult > 0);*/
-
     myString = receiveAll(ConnectSocket);
-    //cout << myString << endl;
-
     playerOrder = myString;
 
     if(playerOrder == "1" || playerOrder == "2")
     {
-        cout << "You are player #" << playerOrder << endl;
+        cout << "You are player #" << playerOrder << endl << endl;
     }
     else
     {
@@ -182,7 +148,7 @@ int __cdecl main(int argc, char **argv)
     }
 
 
-    // Players chose characters.
+    // Players choose characters.
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
     if(playerOrder == "1")
@@ -192,11 +158,11 @@ int __cdecl main(int argc, char **argv)
         player = w1;
         classType = "Wizard";
         sendAll(ConnectSocket, classType);
-        //send(ConnectSocket, p1Input, sizeof(p1Input), 0);
     }
+
     // Feedback from server
     myString = receiveAll(ConnectSocket);
-    cout << myString << endl;
+    cout << myString << endl << endl;
 
     // Next character
     myString = receiveAll(ConnectSocket);
@@ -208,15 +174,55 @@ int __cdecl main(int argc, char **argv)
         player = f1;
         classType = "Fighter";
         sendAll(ConnectSocket, classType);
-        //char p2Input[512];
-        //strcpy(p2Input, classType.c_str());
-        //send(ConnectSocket, p2Input, sizeof(p2Input), 0);
     }
     // Feedback from server
     myString = receiveAll(ConnectSocket);
-    cout << myString << endl;
+    cout << myString << endl << endl;
 
-    // Receive until the peer closes the connection
+    int abilityNumber;
+    while(gameRuns)
+    {
+        //Reset Ability Number
+        abilityNumber = 0;
+
+        // Turn #
+        myString = receiveAll(ConnectSocket);
+        cout << endl << "--------TURN " << myString <<"--------" << endl << endl;
+
+        // Send/Receive Health Status
+        sendAll(ConnectSocket, to_string(player->getHealth()));
+        myString = receiveAll(ConnectSocket);
+        cout << myString << endl;
+        myString = receiveAll(ConnectSocket);
+        cout << myString << endl;
+
+        if(playerOrder == "1" && !player->isStunned())
+        {
+            cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
+            do
+            {
+                cin >> abilityNumber;
+                if(abilityNumber == 1)
+                {
+                    sendAll(ConnectSocket, "attack");
+                    sendAll(ConnectSocket, to_string(Dice::rollDice(2,6)));
+                }
+                else
+                {
+                    cout << "You can't choose that - please try again (1, 2 or 3)." << endl;
+                }
+            }
+            while(abilityNumber != 1 || abilityNumber != 2 || abilityNumber != 3);
+        }
+        else if(playerOrder == "1" && player->isStunned())
+        {
+            sendAll(ConnectSocket, "stunned");
+            player->changeStunned();
+        }
+        break;
+    }
+
+// Receive until the peer closes the connection
     do
     {
 
@@ -231,7 +237,7 @@ int __cdecl main(int argc, char **argv)
     }
     while( iResult > 0 );
 
-    // shutdown the connection since no more data will be sent
+// shutdown the connection since no more data will be sent
     iResult = shutdown(ConnectSocket, SD_SEND);
     if (iResult == SOCKET_ERROR)
     {
@@ -241,7 +247,7 @@ int __cdecl main(int argc, char **argv)
         return 1;
     }
 
-    // cleanup
+// cleanup
     closesocket(ConnectSocket);
     WSACleanup();
 
@@ -283,55 +289,26 @@ string characterCreation(Character &playerCharacter)
     }
 }
 
-string receiveAll(SOCKET s) {
+string receiveAll(SOCKET s)
+{
     memset(recvbuf, 0, DEFAULT_BUFLEN);
     string message;
     int tempIResult = recv(s, recvbuf, recvbuflen, 0);
-    if (tempIResult != 0) {
+    if (tempIResult != 0)
+    {
         message = recvbuf;
         message = message.c_str();
         return message;
     }
 }
 
-void sendAll(SOCKET s, string msg) {
+void sendAll(SOCKET s, string msg)
+{
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
     //cout << "Client: - " << msg << " - has been sent" << endl;
-    if (tempIResult <= 0) {
+    if (tempIResult <= 0)
+    {
         cout << "Send failed" << endl;
     }
 }
-
-/*string receiveAll(SOCKET s, char *buf, int *len)
-{
-    int total = 0;
-    int left = *len;
-    int tempIResult;
-    string result;
-    while (total < *len) {
-        tempIResult = recv(s, buf, left, 0);
-        if (tempIResult <= 0) {break;}
-        total +=tempIResult;
-        left -= tempIResult;
-    }
-    result = (string)buf;
-    memset(buf, 0, *len);
-    return result;
-    do
-    {
-        tempIResult = recv(s, recvbuf, recvbuflen, 0);
-        if(tempIResult > 0)
-        {
-            result = recvbuf;
-            memset(recvbuf, 0, recvbuflen);
-            break;
-        }
-        else
-        {
-
-        }
-    }
-    while (total != recvbuflen);
-    return result;
-}*/
