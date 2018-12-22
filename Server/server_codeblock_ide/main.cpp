@@ -161,11 +161,21 @@ int __cdecl main(void)
     receiveAll(ClientSocket2);
     msg = "Player 2 has chosen " + (std::string)recvbuf;
     sendToAllClients(msg,  allClients);
-    std::cout << "Characters chosen" << std::endl;
+
+    // Player Names
+    std::string player1Name;
+    std::string player2Name;
+
+    player1Name = receiveAll(ClientSocket1);
+    player2Name = receiveAll(ClientSocket2);
+
+    std::string nameArray[2] = {player1Name, player2Name};
 
     // Combat and Game Logic runs in the following loop until a winner is determined.
-    int turnCounter = 0;
+    int turnCounter = 1;
     std::string turnString;
+    int damage;
+    std::string opponent;
     while(gameRuns) {
         // Turn #
         turnString = std::to_string(turnCounter);
@@ -179,20 +189,30 @@ int __cdecl main(void)
 
         // Action Status - Both players
         for(int i = 0; i < 2; i++) {
+            damage = 0; // reset damage.
+            if(i == 0) {
+                opponent = player2Name;
+            } else if (i == 1) {
+                opponent = player1Name;
+            }
             msg = receiveAll(allClients[i]);
             if(msg == "stunned") {
-                sendToAllClients("Player " + std::to_string(i+1) + " is currently stunned.", allClients);
+                sendToAllClients( nameArray[i] + std::to_string(i+1) + " is currently stunned.", allClients);
             } else if(msg == "attack") {
                 msg = receiveAll(allClients[i]);
-                std::cout << "Player " << std::to_string(i+1) << " attacks for " << msg << " damage" << std::endl;
+                msg = msg + opponent;
+                damage = std::stoi(receiveAll(allClients[i]));
+                if(i+1 == 1) {
+                    sendAll(allClients[1], std::to_string(damage));
+                } else if(i+1 == 2) {
+                    sendAll(allClients[0], std::to_string(damage));
+                }
             } else if(msg == "defense") {
 
             }
+            sendToAllClients(msg, allClients);
         }
-
-
         turnCounter += 1;
-        break;
     }
 
     // shutdown the connection since we're done

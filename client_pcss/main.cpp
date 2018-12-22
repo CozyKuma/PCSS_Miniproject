@@ -126,7 +126,7 @@ int __cdecl main(int argc, char **argv)
 
     //setsockopt(ConnectSocket, SOL_SOCKET, SO_RCVTIMEO,  recvbuf, recvbuflen);
     characPtr player;
-    string playerOrder = "0";
+    int playerOrder = 0;
     string classType;
     bool gameRuns = true;
     // Welcome message
@@ -136,9 +136,9 @@ int __cdecl main(int argc, char **argv)
 
     // Receive order of players
     myString = receiveAll(ConnectSocket);
-    playerOrder = myString;
+    playerOrder = atoi(myString.c_str());
 
-    if(playerOrder == "1" || playerOrder == "2")
+    if(playerOrder == 1 || playerOrder == 2)
     {
         cout << "You are player #" << playerOrder << endl << endl;
     }
@@ -151,7 +151,7 @@ int __cdecl main(int argc, char **argv)
     // Players choose characters.
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
-    if(playerOrder == "1")
+    if(playerOrder == 1)
     {
         // classType = characterCreation(player);
         Wizard* w1 = new Wizard("WizardMan");
@@ -167,7 +167,7 @@ int __cdecl main(int argc, char **argv)
     // Next character
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
-    if(playerOrder == "2")
+    if(playerOrder == 2)
     {
         // classType = characterCreation(player);
         Fighter* f1 = new Fighter("FighterMan");
@@ -179,12 +179,14 @@ int __cdecl main(int argc, char **argv)
     myString = receiveAll(ConnectSocket);
     cout << myString << endl << endl;
 
+    sendAll(ConnectSocket, player->getName());
+
+    string abilityDesc;
     int abilityNumber;
+    bool abilitySuccess;
+    int abilityDamage;
     while(gameRuns)
     {
-        //Reset Ability Number
-        abilityNumber = 0;
-
         // Turn #
         myString = receiveAll(ConnectSocket);
         cout << endl << "--------TURN " << myString <<"--------" << endl << endl;
@@ -194,32 +196,57 @@ int __cdecl main(int argc, char **argv)
         myString = receiveAll(ConnectSocket);
         cout << myString << endl;
         myString = receiveAll(ConnectSocket);
-        cout << myString << endl;
+        cout << myString << endl << endl;
 
-        if(playerOrder == "1" && !player->isStunned())
+        for(int i = 0; i < 2; i++)
         {
-            cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
-            do
+            //Reset Ability Number
+            abilityNumber = 0;
+            abilitySuccess =  false;
+            abilityDamage = 0;
+            abilityDesc = "";
+            if(playerOrder == i+1 && !player->isStunned())
             {
-                cin >> abilityNumber;
-                if(abilityNumber == 1)
+                cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
+                do
                 {
-                    sendAll(ConnectSocket, "attack");
-                    sendAll(ConnectSocket, to_string(Dice::rollDice(2,6)));
+                    cin >> abilityNumber;
+                    if(abilityNumber == 1)
+                    {
+                        sendAll(ConnectSocket, "attack");
+
+                        // get necessary attack data
+                        abilitySuccess = player->getAbilitySuccess(abilityNumber);
+                        abilityDamage = player->getAbilityDamage(abilityNumber, abilitySuccess);
+                        abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
+
+                        sendAll(ConnectSocket, abilityDesc);
+                        sendAll(ConnectSocket, to_string(abilityDamage));
+                    }
+                    else
+                    {
+                        cout << "You can't choose that - please try again (1, 2 or 3)." << endl;
+                    }
                 }
-                else
-                {
-                    cout << "You can't choose that - please try again (1, 2 or 3)." << endl;
-                }
+                while((abilityNumber < 1) && (abilityNumber < 3));
             }
-            while(abilityNumber != 1 || abilityNumber != 2 || abilityNumber != 3);
+            else if(playerOrder == i+1 && player->isStunned())
+            {
+                sendAll(ConnectSocket, "stunned");
+                player->changeStunned();
+            }
+
+            // Take damage if you are the opponent
+            if(playerOrder == 2 && i+1 == 1) {
+                    player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
+            } else if(playerOrder == 1 && i+1 == 2) {
+                    player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
+            }
+
+            // Server sends what happened to both clients
+            myString = receiveAll(ConnectSocket);
+            cout << myString << endl << endl;
         }
-        else if(playerOrder == "1" && player->isStunned())
-        {
-            sendAll(ConnectSocket, "stunned");
-            player->changeStunned();
-        }
-        break;
     }
 
 // Receive until the peer closes the connection
