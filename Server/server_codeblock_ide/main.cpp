@@ -175,8 +175,10 @@ int __cdecl main(void)
     int turnCounter = 1;
     std::string turnString;
     int damage;
+    std::string effect;
     std::string opponent;
-    while(gameRuns) {
+    while(gameRuns)
+    {
         // Turn #
         turnString = std::to_string(turnCounter);
         sendToAllClients(turnString, allClients);
@@ -188,27 +190,78 @@ int __cdecl main(void)
         sendToAllClients("Player 2 has " + msg + " health left.", allClients);
 
         // Action Status - Both players
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 2; i++)
+        {
             damage = 0; // reset damage.
-            if(i == 0) {
+            if(i == 0)
+            {
                 opponent = player2Name;
-            } else if (i == 1) {
+            }
+            else if (i == 1)
+            {
                 opponent = player1Name;
             }
             msg = receiveAll(allClients[i]);
-            if(msg == "stunned") {
-                sendToAllClients( nameArray[i] + std::to_string(i+1) + " is currently stunned.", allClients);
-            } else if(msg == "attack") {
+            if(msg == "stunned")
+            {
+                msg = nameArray[i] + " is currently stunned.";
+                if(i+1 == 1)
+                {
+                    sendAll(allClients[1], std::to_string(0));
+                    sendAll(allClients[1], "none");
+                }
+                else if(i+1 == 2)
+                {
+                    sendAll(allClients[0], std::to_string(0));
+                    sendAll(allClients[0], "none");
+                }
+            }
+            else if(msg == "attack")
+            {
                 msg = receiveAll(allClients[i]);
                 msg = msg + opponent;
                 damage = std::stoi(receiveAll(allClients[i]));
-                if(i+1 == 1) {
+                if(i+1 == 1)
+                {
                     sendAll(allClients[1], std::to_string(damage));
-                } else if(i+1 == 2) {
-                    sendAll(allClients[0], std::to_string(damage));
+                    sendAll(allClients[1], "none");
                 }
-            } else if(msg == "defense") {
-
+                else if(i+1 == 2)
+                {
+                    sendAll(allClients[0], std::to_string(damage));
+                    sendAll(allClients[0], "none");
+                }
+            }
+            else if(msg == "defend")
+            {
+                msg = receiveAll(allClients[i]);
+                if(i+1 == 1)
+                {
+                    sendAll(allClients[1], std::to_string(0));
+                    sendAll(allClients[1], "none");
+                }
+                else if(i+1 == 2)
+                {
+                    sendAll(allClients[0], std::to_string(0));
+                    sendAll(allClients[0], "none");
+                }
+            }
+            else if(msg == "risk")
+            {
+                msg = receiveAll(allClients[i]);
+                msg = msg + opponent;
+                damage = std::stoi(receiveAll(allClients[i]));
+                effect = receiveAll(allClients[i]);
+                if(i+1 == 1)
+                {
+                    sendAll(allClients[1], std::to_string(damage));
+                    sendAll(allClients[1], effect);
+                }
+                else if(i+1 == 2)
+                {
+                    sendAll(allClients[0], std::to_string(damage));
+                    sendAll(allClients[0], effect);
+                }
             }
             sendToAllClients(msg, allClients);
         }
@@ -243,12 +296,15 @@ int __cdecl main(void)
 }
 
 // Send all information to all connected Sockets
-void sendToAllClients(std::string msg, SOCKET clientArray[]) {
+void sendToAllClients(std::string msg, SOCKET clientArray[])
+{
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     int tempIResult;
-    for(int i=0; i<2; i++) {
+    for(int i=0; i<2; i++)
+    {
         tempIResult = send(clientArray[i], msg.c_str(), strlen(msg.c_str()), 0);
-        if(tempIResult == SOCKET_ERROR) {
+        if(tempIResult == SOCKET_ERROR)
+        {
             std::cout << "send failed with error " << WSAGetLastError() << std::endl;
             closesocket(clientArray[i]);
             WSACleanup();
@@ -257,20 +313,24 @@ void sendToAllClients(std::string msg, SOCKET clientArray[]) {
 }
 
 // Send all information to a Socket
-void sendAll(SOCKET s, std::string msg) {
+void sendAll(SOCKET s, std::string msg)
+{
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
-    if (tempIResult <= 0) {
+    if (tempIResult <= 0)
+    {
         std::cout << "Send failed" << std::endl;
     }
 }
 
 // Receive all information from a Socket
-std::string receiveAll(SOCKET s) {
+std::string receiveAll(SOCKET s)
+{
     memset(recvbuf, 0, DEFAULT_BUFLEN);
     std::string message;
     int tempIResult = recv(s, recvbuf, recvbuflen, 0);
-    if (tempIResult != 0) {
+    if (tempIResult != 0)
+    {
         message = recvbuf;
         message = message.c_str();
         return message;

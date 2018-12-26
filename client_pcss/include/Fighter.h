@@ -17,6 +17,7 @@ class Fighter : public Character
         int getAbilityDamage(int ability, bool success);
         string getConditionChange(int ability, bool success);
         bool getAbilitySuccess(int ability);
+        string getAbilityEffect(int ability, bool success);
     protected:
 
     private:

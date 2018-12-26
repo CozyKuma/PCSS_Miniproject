@@ -45,6 +45,7 @@ class Character
         virtual int getAbilityDamage(int ability, bool success) {};
         virtual string getAbilityDesc(int ability, bool success, int damage) {};
         virtual void chooseAbility(int ability, Character& target, Character& self) {};
+        virtual string getAbilityEffect(int ability, bool success) {};
 };
 
 #endif // CHARACTER_H

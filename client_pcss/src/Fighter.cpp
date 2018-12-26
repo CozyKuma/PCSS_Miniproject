@@ -148,3 +148,13 @@ bool Fighter::getAbilitySuccess(int ability) {
     return tempBool;
 }
 
+string Fighter::getAbilityEffect(int ability, bool success) {
+    string tempEffect;
+    if(success && ability == 3) {
+        tempEffect = "stun";
+    } else {
+        tempEffect = "none";
+    }
+    return tempEffect;
+}
+

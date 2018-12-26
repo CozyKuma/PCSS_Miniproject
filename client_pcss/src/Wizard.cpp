@@ -85,11 +85,11 @@ string Wizard::getAbilityDesc(int ability, bool success, int damage)
     {
         if(success)
         {
-            tempString = tempName + " cast lightning strike and dealt  " + to_string(damage) + " points of damage to ";
+            tempString = tempName + " cast lightning strike and dealt " + to_string(damage) + " points of damage to ";
         }
         else
         {
-            tempString = tempName + " accidentally cast lightning strike on yourself and receive " + to_string(damage) + " damage.";
+            tempString = tempName + " accidentally cast lightning strike on yourself and receive " + to_string(damage) + " damage and completely missing ";
             this->takeDamage(damage);
         }
     }
@@ -138,4 +138,10 @@ bool Wizard::getAbilitySuccess(int ability) {
         }
     }
     return tempBool;
+}
+
+string Wizard::getAbilityEffect(int ability, bool success) {
+    string tempEffect;
+    tempEffect = "none";
+    return tempEffect;
 }

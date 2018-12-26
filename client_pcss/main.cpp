@@ -185,6 +185,7 @@ int __cdecl main(int argc, char **argv)
     int abilityNumber;
     bool abilitySuccess;
     int abilityDamage;
+    string abilityEffect;
     while(gameRuns)
     {
         // Turn #
@@ -205,6 +206,7 @@ int __cdecl main(int argc, char **argv)
             abilitySuccess =  false;
             abilityDamage = 0;
             abilityDesc = "";
+            abilityEffect = "none";
             if(playerOrder == i+1 && !player->isStunned())
             {
                 cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
@@ -223,6 +225,29 @@ int __cdecl main(int argc, char **argv)
                         sendAll(ConnectSocket, abilityDesc);
                         sendAll(ConnectSocket, to_string(abilityDamage));
                     }
+                    else if(abilityNumber == 2)
+                    {
+                        sendAll(ConnectSocket, "defend");
+
+                        // get necessary attack data
+                        abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
+
+                        sendAll(ConnectSocket, abilityDesc);
+                    }
+                    else if(abilityNumber == 3)
+                    {
+                        sendAll(ConnectSocket, "risk");
+
+                        abilitySuccess = player->getAbilitySuccess(abilityNumber);
+                        abilityDamage = player->getAbilityDamage(abilityNumber, abilitySuccess);
+                        abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
+                        abilityEffect = player->getAbilityEffect(abilityNumber, abilitySuccess);
+
+                        sendAll(ConnectSocket, abilityDesc);
+                        sendAll(ConnectSocket, to_string(abilityDamage));
+                        sendAll(ConnectSocket, abilityEffect);
+
+                    }
                     else
                     {
                         cout << "You can't choose that - please try again (1, 2 or 3)." << endl;
@@ -237,10 +262,23 @@ int __cdecl main(int argc, char **argv)
             }
 
             // Take damage if you are the opponent
-            if(playerOrder == 2 && i+1 == 1) {
-                    player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
-            } else if(playerOrder == 1 && i+1 == 2) {
-                    player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
+            if(playerOrder == 2 && i+1 == 1)
+            {
+                player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
+                myString = receiveAll(ConnectSocket);
+                if(myString == "stun")
+                {
+                    player->changeStunned();
+                }
+            }
+            else if(playerOrder == 1 && i+1 == 2)
+            {
+                player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
+                myString = receiveAll(ConnectSocket);
+                if(myString == "stun")
+                {
+                    player->changeStunned();
+                }
             }
 
             // Server sends what happened to both clients
