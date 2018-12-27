@@ -74,7 +74,7 @@ void Fighter::chooseAbility(int ability, Character& target, Character& self)
     }
 }
 
-string Fighter::getAbilityDesc(int ability, bool success, int damage)
+string Fighter::getAbilityDesc(int ability, bool success, int &damage)
 {
     string tempName = Character::getName();
     string tempString;
@@ -84,7 +84,7 @@ string Fighter::getAbilityDesc(int ability, bool success, int damage)
     }
     else if (ability == 2)
     {
-        tempString = tempName + " raise your shield to block incoming attacks. Your defense has gone up";
+        tempString = tempName + " raise your shield to block incoming attacks. Your defense has gone up for the next round.";
     }
     else if (ability == 3)
     {

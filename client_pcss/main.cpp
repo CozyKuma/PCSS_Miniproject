@@ -26,7 +26,7 @@
 
 typedef Character* characPtr;
 
-string characterCreation(Character &playerCharacter);
+string characterCreation(characPtr &playerCharacter);
 //string receiveAll(SOCKET s, char *buf, int *len);
 string receiveAll(SOCKET s);
 void sendAll(SOCKET s, string msg);
@@ -123,8 +123,6 @@ int __cdecl main(int argc, char **argv)
 
     printf("Bytes Sent: %d\n", iResult);
 
-
-    //setsockopt(ConnectSocket, SOL_SOCKET, SO_RCVTIMEO,  recvbuf, recvbuflen);
     characPtr player;
     int playerOrder = 0;
     string classType;
@@ -147,16 +145,16 @@ int __cdecl main(int argc, char **argv)
         cout << "Something went wrong. You are player ?? " << playerOrder << endl;
     }
 
-
+    string tempName;
     // Players choose characters.
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
     if(playerOrder == 1)
     {
-        // classType = characterCreation(player);
-        Wizard* w1 = new Wizard("WizardMan");
+        classType = characterCreation(player);
+        /*Wizard* w1 = new Wizard("WizardMan");
         player = w1;
-        classType = "Wizard";
+        classType = "Wizard";*/
         sendAll(ConnectSocket, classType);
     }
 
@@ -169,23 +167,38 @@ int __cdecl main(int argc, char **argv)
     cout << myString << endl;
     if(playerOrder == 2)
     {
-        // classType = characterCreation(player);
-        Fighter* f1 = new Fighter("FighterMan");
+        classType = characterCreation(player);
+        /*Fighter* f1 = new Fighter("FighterMan");
         player = f1;
-        classType = "Fighter";
+        classType = "Fighter";*/
         sendAll(ConnectSocket, classType);
     }
     // Feedback from server
     myString = receiveAll(ConnectSocket);
     cout << myString << endl << endl;
 
-    sendAll(ConnectSocket, player->getName());
 
+    //Print out names 1 at a time.
+    if(playerOrder == 1) {
+        sendAll(ConnectSocket, player->getName());
+    }
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl << endl;
+
+    if (playerOrder == 2) {
+        sendAll(ConnectSocket, player->getName());
+    }
+    myString = receiveAll(ConnectSocket);
+    cout << myString << endl << endl;
+
+
+    // Variables for game logic and abilities setup.
     string abilityDesc;
     int abilityNumber;
     bool abilitySuccess;
     int abilityDamage;
     string abilityEffect;
+    bool abilityFlag;
     while(gameRuns)
     {
         // Turn #
@@ -207,11 +220,12 @@ int __cdecl main(int argc, char **argv)
             abilityDamage = 0;
             abilityDesc = "";
             abilityEffect = "none";
+            abilityFlag = false;
             if(playerOrder == i+1 && !player->isStunned())
             {
-                cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
                 do
                 {
+                    cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
                     cin >> abilityNumber;
                     if(abilityNumber == 1)
                     {
@@ -223,7 +237,10 @@ int __cdecl main(int argc, char **argv)
                         abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
 
                         sendAll(ConnectSocket, abilityDesc);
+                        receiveAll(ConnectSocket);
                         sendAll(ConnectSocket, to_string(abilityDamage));
+                        abilityFlag = true;
+                        //cout << "Damage and Desc sent" << endl;
                     }
                     else if(abilityNumber == 2)
                     {
@@ -233,6 +250,8 @@ int __cdecl main(int argc, char **argv)
                         abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
 
                         sendAll(ConnectSocket, abilityDesc);
+                        player->changeDefenseFlag();
+                        abilityFlag = true;
                     }
                     else if(abilityNumber == 3)
                     {
@@ -244,16 +263,17 @@ int __cdecl main(int argc, char **argv)
                         abilityEffect = player->getAbilityEffect(abilityNumber, abilitySuccess);
 
                         sendAll(ConnectSocket, abilityDesc);
+                        receiveAll(ConnectSocket);
                         sendAll(ConnectSocket, to_string(abilityDamage));
                         sendAll(ConnectSocket, abilityEffect);
-
+                        abilityFlag = true;
                     }
                     else
                     {
                         cout << "You can't choose that - please try again (1, 2 or 3)." << endl;
                     }
                 }
-                while((abilityNumber < 1) && (abilityNumber < 3));
+                while(!abilityFlag);
             }
             else if(playerOrder == i+1 && player->isStunned())
             {
@@ -266,6 +286,10 @@ int __cdecl main(int argc, char **argv)
             {
                 player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
                 myString = receiveAll(ConnectSocket);
+                if(player->getDefenseFlag() == true)
+                {
+                    player->changeDefenseFlag();
+                }
                 if(myString == "stun")
                 {
                     player->changeStunned();
@@ -275,6 +299,10 @@ int __cdecl main(int argc, char **argv)
             {
                 player->takeDamage(atoi(receiveAll(ConnectSocket).c_str()));
                 myString = receiveAll(ConnectSocket);
+                if(player->getDefenseFlag() == true)
+                {
+                    player->changeDefenseFlag();
+                }
                 if(myString == "stun")
                 {
                     player->changeStunned();
@@ -284,23 +312,17 @@ int __cdecl main(int argc, char **argv)
             // Server sends what happened to both clients
             myString = receiveAll(ConnectSocket);
             cout << myString << endl << endl;
+
+            sendAll(ConnectSocket, to_string(player->getHealth()));
+            myString = receiveAll(ConnectSocket);
+
+            if(myString != "no casualties")
+            {
+                cout << endl << myString << endl;
+                gameRuns = false;
+            }
         }
     }
-
-// Receive until the peer closes the connection
-    do
-    {
-
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        if ( iResult > 0 )
-            printf(recvbuf);
-        else if ( iResult == 0 )
-            printf("Connection closed\n");
-        else
-            printf("recv failed with error: %d\n", WSAGetLastError());
-
-    }
-    while( iResult > 0 );
 
 // shutdown the connection since no more data will be sent
     iResult = shutdown(ConnectSocket, SD_SEND);
@@ -319,26 +341,26 @@ int __cdecl main(int argc, char **argv)
     return 0;
 }
 
-string characterCreation(Character &playerCharacter)
+string characterCreation(characPtr &playerCharacter)
 {
     int classChoice = 0;
-    string nameChoice;
+    string tempName;
     cout << "What is your name?" << endl;
-    cin >> nameChoice;
-    while(classChoice != 1 || classChoice != 2 || classChoice != 3)
+    cin >> tempName;
+    while(classChoice != 1 || classChoice != 2)
     {
-        cout << "What is your class? 1 = Wizard, 2 = Fighter, 3 = Ranger" << endl;
+        cout << "What is your class? 1 = Wizard or 2 = Fighter" << endl;
         cin >> classChoice;
         if(classChoice == 1)
         {
-            Wizard* w1 = new Wizard(nameChoice);
-            playerCharacter = *w1;
+            Wizard* w1 = new Wizard(tempName);
+            playerCharacter = w1;
             return "Wizard";
         }
         else if(classChoice == 2)
         {
-            Fighter* f1 = new Fighter(nameChoice);
-            playerCharacter = *f1;
+            Fighter* f1 = new Fighter(tempName);
+            playerCharacter = f1;
             return "Fighter";
         }
         /*else if(classChoice == 3)
@@ -357,6 +379,25 @@ string characterCreation(Character &playerCharacter)
 string receiveAll(SOCKET s)
 {
     memset(recvbuf, 0, DEFAULT_BUFLEN);
+    int tempResult = 1, total = 0, found = 0;
+    //char temp[512];
+
+    while(!found) {
+        //tempResult = recv(s, &temp[total], sizeof(temp) - total - 1, 0);
+        tempResult = recv(s, &recvbuf[total], recvbuflen - total - 1, 0);
+        if(tempResult == -1) {
+            cout << "Error receiving" << endl;
+            break;
+        }
+        total += tempResult;
+        //temp[total] = '\0';
+        found = (strchr(recvbuf, '\0') != 0);
+
+    }
+
+    return recvbuf;
+
+    /*memset(recvbuf, 0, DEFAULT_BUFLEN);
     string message;
     int tempIResult = recv(s, recvbuf, recvbuflen, 0);
     if (tempIResult != 0)
@@ -364,13 +405,14 @@ string receiveAll(SOCKET s)
         message = recvbuf;
         message = message.c_str();
         return message;
-    }
+    }*/
 }
 
 void sendAll(SOCKET s, string msg)
 {
     memset(sendbuf, 0, DEFAULT_BUFLEN);
-    int tempIResult = send(s, msg.c_str(), strlen(msg.c_str()), 0);
+    msg = msg + "\0";
+    int tempIResult = send(s, msg.c_str(), strlen(msg.c_str())+1, 0);
     //cout << "Client: - " << msg << " - has been sent" << endl;
     if (tempIResult <= 0)
     {

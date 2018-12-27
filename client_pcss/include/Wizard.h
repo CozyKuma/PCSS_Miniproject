@@ -13,7 +13,7 @@ class Wizard : public Character
         void spellShield(Character& self);
         void lightningStrike(Character& target, Character& self);
         void chooseAbility(int ability, Character& target, Character& self);
-        string getAbilityDesc(int ability, bool success, int damage);
+        string getAbilityDesc(int ability, bool success, int &damage);
         int getAbilityDamage(int ability, bool success);
         string getConditionChange(int ability, bool success);
         bool getAbilitySuccess(int ability);

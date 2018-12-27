@@ -43,7 +43,7 @@ class Character
         virtual bool getAbilitySuccess(int ability) {};
         virtual string getConditionChange(int ability, bool success) {};
         virtual int getAbilityDamage(int ability, bool success) {};
-        virtual string getAbilityDesc(int ability, bool success, int damage) {};
+        virtual string getAbilityDesc(int ability, bool success, int &damage) {};
         virtual void chooseAbility(int ability, Character& target, Character& self) {};
         virtual string getAbilityEffect(int ability, bool success) {};
 };

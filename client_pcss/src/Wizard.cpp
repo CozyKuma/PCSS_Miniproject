@@ -69,7 +69,7 @@ void Wizard::chooseAbility(int ability, Character& target, Character& self)
     }
 }
 
-string Wizard::getAbilityDesc(int ability, bool success, int damage)
+string Wizard::getAbilityDesc(int ability, bool success, int &damage)
 {
     string tempName = Character::getName();
     string tempString;
@@ -79,7 +79,7 @@ string Wizard::getAbilityDesc(int ability, bool success, int damage)
     }
     else if (ability == 2)
     {
-        tempString = tempName + " cast a spell shield. Your defense has gone up";
+        tempString = tempName + " cast a spell shield. Your defense has gone up for the next round.";
     }
     else if (ability == 3)
     {
@@ -91,6 +91,7 @@ string Wizard::getAbilityDesc(int ability, bool success, int damage)
         {
             tempString = tempName + " accidentally cast lightning strike on yourself and receive " + to_string(damage) + " damage and completely missing ";
             this->takeDamage(damage);
+            damage = 0;
         }
     }
     return tempString;

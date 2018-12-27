@@ -122,10 +122,12 @@ Character::Character():
             if (defenseFlag == false)
             {
                 defenseFlag = true;
+                setDefense(2);
             }
             else
             {
                 defenseFlag = false;
+                setDefense(1);
             }
         }
 
