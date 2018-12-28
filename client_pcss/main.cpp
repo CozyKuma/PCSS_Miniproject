@@ -12,7 +12,6 @@
 #include "Character.h"
 #include "Wizard.h"
 #include "Fighter.h"
-#include "Ranger.h"
 #include "Dice.h"
 
 // Need to link with Ws2_32.lib, Mswsock.lib, and Advapi32.lib
@@ -45,8 +44,6 @@ int __cdecl main(int argc, char **argv)
                          *ptr = NULL,
                           hints;
     int iResult;
-    //memset(recvbuf, '\0', DEFAULT_BUFLEN);
-    //memset(sendbuf, '\0', DEFAULT_BUFLEN);
 
     // Validate the parameters
     if (argc != 2)
@@ -123,14 +120,15 @@ int __cdecl main(int argc, char **argv)
 
     printf("Bytes Sent: %d\n", iResult);
 
+    // Initial variables for character creation and order of actions.
     characPtr player;
     int playerOrder = 0;
     string classType;
     bool gameRuns = true;
+
     // Welcome message
     string myString = receiveAll(ConnectSocket);
     cout << myString << endl;
-
 
     // Receive order of players
     myString = receiveAll(ConnectSocket);
@@ -145,16 +143,12 @@ int __cdecl main(int argc, char **argv)
         cout << "Something went wrong. You are player ?? " << playerOrder << endl;
     }
 
-    string tempName;
     // Players choose characters.
     myString = receiveAll(ConnectSocket);
     cout << myString << endl;
     if(playerOrder == 1)
     {
         classType = characterCreation(player);
-        /*Wizard* w1 = new Wizard("WizardMan");
-        player = w1;
-        classType = "Wizard";*/
         sendAll(ConnectSocket, classType);
     }
 
@@ -168,9 +162,6 @@ int __cdecl main(int argc, char **argv)
     if(playerOrder == 2)
     {
         classType = characterCreation(player);
-        /*Fighter* f1 = new Fighter("FighterMan");
-        player = f1;
-        classType = "Fighter";*/
         sendAll(ConnectSocket, classType);
     }
     // Feedback from server
@@ -199,6 +190,8 @@ int __cdecl main(int argc, char **argv)
     int abilityDamage;
     string abilityEffect;
     bool abilityFlag;
+
+    // ---- The Game Loop ---- //
     while(gameRuns)
     {
         // Turn #
@@ -223,7 +216,7 @@ int __cdecl main(int argc, char **argv)
             abilityFlag = false;
             if(playerOrder == i+1 && !player->isStunned())
             {
-                do
+                do // Loop until the player has chosen a valid input for an ability
                 {
                     cout << "Choose your ability by entering 1 (normal attack), 2 (defensive action) or 3 (high risk/high reward attack)" << endl;
                     cin >> abilityNumber;
@@ -257,6 +250,7 @@ int __cdecl main(int argc, char **argv)
                     {
                         sendAll(ConnectSocket, "risk");
 
+                        // get necessary attack data
                         abilitySuccess = player->getAbilitySuccess(abilityNumber);
                         abilityDamage = player->getAbilityDamage(abilityNumber, abilitySuccess);
                         abilityDesc = player->getAbilityDesc(abilityNumber, abilitySuccess, abilityDamage);
@@ -275,7 +269,7 @@ int __cdecl main(int argc, char **argv)
                 }
                 while(!abilityFlag);
             }
-            else if(playerOrder == i+1 && player->isStunned())
+            else if(playerOrder == i+1 && player->isStunned()) // check to see if the player is stunned from an earlier effect
             {
                 sendAll(ConnectSocket, "stunned");
                 player->changeStunned();
@@ -341,6 +335,7 @@ int __cdecl main(int argc, char **argv)
     return 0;
 }
 
+// Function which lets the players name and choose their preferred class
 string characterCreation(characPtr &playerCharacter)
 {
     int classChoice = 0;
@@ -363,12 +358,6 @@ string characterCreation(characPtr &playerCharacter)
             playerCharacter = f1;
             return "Fighter";
         }
-        /*else if(classChoice == 3)
-        {
-            Ranger* r1 = new Ranger(nameChoice);
-            playerCharacter = r1;
-            return "Ranger";
-        }*/
         else
         {
             cout << "Invalid number for class" << endl;
@@ -376,6 +365,7 @@ string characterCreation(characPtr &playerCharacter)
     }
 }
 
+// Receive all information from a Socket
 string receiveAll(SOCKET s)
 {
     memset(recvbuf, 0, DEFAULT_BUFLEN);
@@ -390,30 +380,19 @@ string receiveAll(SOCKET s)
             break;
         }
         total += tempResult;
-        //temp[total] = '\0';
         found = (strchr(recvbuf, '\0') != 0);
 
     }
 
     return recvbuf;
-
-    /*memset(recvbuf, 0, DEFAULT_BUFLEN);
-    string message;
-    int tempIResult = recv(s, recvbuf, recvbuflen, 0);
-    if (tempIResult != 0)
-    {
-        message = recvbuf;
-        message = message.c_str();
-        return message;
-    }*/
 }
 
+// Send all information to a Socket
 void sendAll(SOCKET s, string msg)
 {
     memset(sendbuf, 0, DEFAULT_BUFLEN);
     msg = msg + "\0";
     int tempIResult = send(s, msg.c_str(), strlen(msg.c_str())+1, 0);
-    //cout << "Client: - " << msg << " - has been sent" << endl;
     if (tempIResult <= 0)
     {
         cout << "Send failed" << endl;

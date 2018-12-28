@@ -1,1 +1,43 @@
 # depslib dependency file v1.0
+1545988443 source:d:\github\pcss_miniproject\client_pcss\main.cpp
+	<windows.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<stdlib.h>
+	<stdio.h>
+	"Character.h"
+	"Wizard.h"
+	"Fighter.h"
+	"Ranger.h"
+	"Dice.h"
+
+1545990079 d:\github\pcss_miniproject\client_pcss\include\character.h
+	<string>
+	<iostream>
+	"Dice.h"
+
+1545229228 d:\github\pcss_miniproject\client_pcss\include\dice.h
+
+1545989817 d:\github\pcss_miniproject\client_pcss\include\wizard.h
+	"Character.h"
+
+1545989817 d:\github\pcss_miniproject\client_pcss\include\fighter.h
+	"Character.h"
+
+1545229228 d:\github\pcss_miniproject\client_pcss\include\ranger.h
+	"Character.h"
+
+1545989817 source:d:\github\pcss_miniproject\client_pcss\src\character.cpp
+	"Character.h"
+
+1545406710 source:d:\github\pcss_miniproject\client_pcss\src\dice.cpp
+	"Dice.h"
+	<cstdlib>
+	<ctime>
+
+1545989817 source:d:\github\pcss_miniproject\client_pcss\src\fighter.cpp
+	"Fighter.h"
+
+1545989817 source:d:\github\pcss_miniproject\client_pcss\src\wizard.cpp
+	"Wizard.h"
+

@@ -63,7 +63,6 @@ int __cdecl main(void)
         return 1;
     }
 
-    //creating socket for connecting to server
     // Create a SOCKET for connecting to server
     ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
     if (ListenSocket == INVALID_SOCKET)
@@ -188,6 +187,8 @@ int __cdecl main(void)
     std::string opponent;
     int player1Health;
     int player2Health;
+
+    // ---- The Game Loop ---- //
     while(gameRuns)
     {
         // Turn #
@@ -204,7 +205,7 @@ int __cdecl main(void)
         for(int i = 0; i < 2; i++)
         {
             damage = 0; // reset damage.
-            if(i == 0)
+            if(i == 0) // sets the opponent for each iteration, such that the abilities will pass the correct name.
             {
                 opponent = player2Name;
             }
@@ -213,7 +214,7 @@ int __cdecl main(void)
                 opponent = player1Name;
             }
             msg = receiveAll(allClients[i]);
-            if(msg == "stunned")
+            if(msg == "stunned") // Checks if the current acting player is stunned
             {
                 msg = nameArray[i] + " is currently stunned.";
                 if(i+1 == 1)
@@ -227,7 +228,7 @@ int __cdecl main(void)
                     sendAll(allClients[0], "none");
                 }
             }
-            else if(msg == "attack")
+            else if(msg == "attack") // The attack action (Ability 1)
             {
                 if(i == 0) {
                     std::cout << player1Name << " attacks" << std::endl << std::endl;
@@ -253,7 +254,7 @@ int __cdecl main(void)
                 }
                 //std::cout << "Damage sent" << std::endl;
             }
-            else if(msg == "defend")
+            else if(msg == "defend") // The defend action (Ability 2)
             {
                 if(i == 0) {
                     std::cout << player1Name << " defends" << std::endl << std::endl;
@@ -272,7 +273,7 @@ int __cdecl main(void)
                     sendAll(allClients[0], "none");
                 }
             }
-            else if(msg == "risk")
+            else if(msg == "risk") // The risky action (Ability 3)
             {
                 if(i == 0) {
                     std::cout << player1Name << " risks it" << std::endl;
@@ -296,9 +297,7 @@ int __cdecl main(void)
                     sendAll(allClients[0], effect);
                 }
             }
-            //std::cout << "Just before Ability Desc." << std::endl;
-            sendToAllClients(msg, allClients);
-            //std::cout << "Ability Desc send to both players." << std::endl;
+            sendToAllClients(msg, allClients); // Sends the action description to both clients/players
 
             // check if any players died
             player1Health = atoi(receiveAll(allClients[0]).c_str());
@@ -318,7 +317,7 @@ int __cdecl main(void)
                 sendToAllClients("no casualties", allClients);
             }
         }
-        turnCounter += 1;
+        turnCounter += 1; //increment the turn counter.
     }
 
     // shutdown the connection since we're done
@@ -391,20 +390,9 @@ std::string receiveAll(SOCKET s)
             break;
         }
         total += tempResult;
-        //temp[total] = '\0';
         found = (strchr(recvbuf, '\0') != 0);
 
     }
     std::cout << recvbuf << std::endl;
     return recvbuf;
-
-    /*memset(recvbuf, 0, DEFAULT_BUFLEN);
-    std::string message;
-    int tempIResult = recv(s, recvbuf, recvbuflen, 0);
-    if (tempIResult != 0)
-    {
-        message = recvbuf;
-        message = message.c_str();
-        return message;
-    }*/
 }

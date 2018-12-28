@@ -10,14 +10,10 @@ class Character
 {
     private:
         string name;
-        int maxHealth;
+        int defense;
         int health;
-        int strength;
-        int dexterity;
-        int intelligence;
         bool alive;
         bool stunned;
-        int defense;
         bool defenseFlag;
 
     public:
@@ -27,25 +23,22 @@ class Character
         string getName();
         int getHealth();
         void setHealth(int h);
-        int getMaxHealth();
-        void setMaxHealth(int MHP);
         bool isAlive();
         void changeAlive();
         bool isStunned();
         void changeStunned();
         void setStunned(bool stun);
-        void printStats();
         int getDefense();
         void setDefense(int def);
         void takeDamage(int dmg);
         void changeDefenseFlag();
         bool getDefenseFlag();
-        virtual bool getAbilitySuccess(int ability) {};
-        virtual string getConditionChange(int ability, bool success) {};
-        virtual int getAbilityDamage(int ability, bool success) {};
-        virtual string getAbilityDesc(int ability, bool success, int &damage) {};
+        virtual bool getAbilitySuccess(int ability) {return false;};
+        virtual string getConditionChange(int ability, bool success) {return "";};
+        virtual int getAbilityDamage(int ability, bool success) {return 0;};
+        virtual string getAbilityDesc(int ability, bool success, int &damage) {return "";};
         virtual void chooseAbility(int ability, Character& target, Character& self) {};
-        virtual string getAbilityEffect(int ability, bool success) {};
+        virtual string getAbilityEffect(int ability, bool success) {return "";};
 };
 
 #endif // CHARACTER_H

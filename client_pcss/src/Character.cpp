@@ -6,10 +6,6 @@ Character::Character(string newName):
     name(newName),
     defense(1),
     health(100),
-    maxHealth(100),
-    strength(10),
-    dexterity(10),
-    intelligence(10),
     alive(true),
     stunned(false),
     defenseFlag(false){}
@@ -18,10 +14,6 @@ Character::Character():
     name("Bob"),
     defense(1),
     health(100),
-    maxHealth(100),
-    strength(10),
-    dexterity(10),
-    intelligence(10),
     alive(true),
     stunned(false),
     defenseFlag(false){}
@@ -82,23 +74,6 @@ Character::Character():
         void Character::setStunned(bool stun){
 
             stunned = stun;
-        }
-
-        int Character::getMaxHealth()
-        {
-            return maxHealth;
-        }
-
-        void Character::setMaxHealth(int MHP)
-        {
-            maxHealth = MHP;
-        }
-
-        void Character::printStats()
-        {
-            cout<< "Strength: " + strength << endl;
-            cout<< "dexterity: " + dexterity <<endl;
-            cout<< "intelligence: " + intelligence <<endl;
         }
 
         int Character::getDefense()

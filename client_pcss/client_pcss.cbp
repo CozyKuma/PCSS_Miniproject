@@ -38,20 +38,14 @@
 		<Linker>
 			<Add library="ws2_32" />
 		</Linker>
-		<Unit filename="include/Archer.h" />
 		<Unit filename="include/Character.h" />
 		<Unit filename="include/Dice.h" />
 		<Unit filename="include/Fighter.h" />
-		<Unit filename="include/Game.h" />
-		<Unit filename="include/Ranger.h" />
 		<Unit filename="include/Wizard.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Archer.cpp" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Dice.cpp" />
 		<Unit filename="src/Fighter.cpp" />
-		<Unit filename="src/Game.cpp" />
-		<Unit filename="src/Ranger.cpp" />
 		<Unit filename="src/Wizard.cpp" />
 		<Extensions>
 			<code_completion />
